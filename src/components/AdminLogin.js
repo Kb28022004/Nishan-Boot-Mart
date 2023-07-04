@@ -3,12 +3,17 @@ import { Box } from "@mui/material";
 import { useState } from "react";
 
 const AdminLogin = (props) => {
-  document.body.style.backgroundColor = "white";
+  const [Show, setShow] = useState(false)
+
   const navigate = useNavigate();
+
   const handleRegister = () => {
     navigate("/AdminRegister");
   };
-  const [Credentials, setCredentials] = useState({ email: "", passoword: "" });
+  const handleShow=()=>{
+    setShow(!Show)
+  }
+  const [Credentials, setCredentials] = useState({ email: "", password: "" });
   const history = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,7 +24,7 @@ const AdminLogin = (props) => {
       },
       body: JSON.stringify({
         email: Credentials.email,
-        passoword: Credentials.passoword,
+        passoword: Credentials.password,
       }),
     });
     const json = response.json();
@@ -93,12 +98,21 @@ const AdminLogin = (props) => {
             marginTop: "10px",
             borderRadius: "8px",
           }}
-          placeholder="Passoword"
-          type="passoword"
-          name="passoword"
-          value={Credentials.passoword}
-          id="possoword"
+          placeholder="Password"
+          type={Show?"text":"password"}
+          name="password"
+          value={Credentials.password}
+          id="password"
         />
+         <label style={{
+          position:"absolute",
+          // padding:"30px 0px 0px 0px",
+          top:"47%",
+          right:"36%",
+          fontWeight:"bold",
+        
+      }} 
+      onClick={handleShow}>{Show?"Hide":"Show"}</label>
         <br />
         <div className="container my-2">
           <NavLink to={'/'}>

@@ -1,16 +1,21 @@
 import React, { useState } from "react";
 import { Box } from "@mui/material";
-import { NavLink } from "react-router-dom";
+import PasswordChecklist from "react-password-checklist";
 
 import { useNavigate } from "react-router-dom";
 // import { useState } from "react";
 
 const AdminRegister = (props) => {
-  document.body.style.backgroundColor = "pink";
+  const [Show, setShow] = useState(false)
+
   const navigate = useNavigate();
+
   const handleLogin = () => {
     navigate("/AdminLogin");
   };
+  const handleShow=()=>{
+    setShow(!Show)
+  }
   const [Credentials, setCredentials] = useState({
     name: "",
     email: "",
@@ -48,7 +53,7 @@ const AdminRegister = (props) => {
     if (json) {
       //save the authtoken and redirect
       localStorage.setItem("token", json.authtoken);
-      history("/");
+      history("/dashboard");
       props.showAlert("Account is created successfully", "success");
     } else {
       props.showAlert("invalid Credentials", "danger");
@@ -70,14 +75,14 @@ const AdminRegister = (props) => {
             color: "blue",
           }}
         >
-          Sign up form
+       Admin Sign up form
         </h1>
       </div>
       <Box
         sx={{
           backgroundColor: "white",
           color: "black",
-          height: "550px",
+          height: "680px",
           width: "40%",
           padding: "20px",
           margin: "0px auto",
@@ -102,6 +107,7 @@ const AdminRegister = (props) => {
           type="text"
           name="name"
           id="name"
+          required
           value={Credentials.name}
         />
         <input
@@ -118,24 +124,39 @@ const AdminRegister = (props) => {
           type="email"
           name="email"
           id="email"
+          required
           value={Credentials.email}
         />
-        <input
-          onChange={onChange}
-          style={{
-            width: "80%",
-            margin: "7px",
-            padding: "8px",
-            marginLeft: "60px",
-            marginTop: "10px",
-            borderRadius: "8px",
-          }}
-          placeholder="Password"
-          type="password"
-          name="password"
-          id="possword"
-          value={Credentials.password}
-        />
+        
+
+<input
+  onChange={onChange}
+  style={{
+    width: "80%",
+    margin: "7px",
+    padding: "8px",
+    marginLeft: "60px",
+    marginTop: "10px",
+    borderRadius: "8px",
+  }}
+  placeholder="Password"
+  type={Show?"text":"password"}
+  
+  value={Credentials.password}
+  name="password"
+  id="possword"
+  required
+/>
+<label style={{
+  position:"absolute",
+  // padding:"30px 0px 0px 0px",
+  top:"54%",
+  right:"36%",
+  fontWeight:"bold",
+
+}} 
+onClick={handleShow}>{Show?"Hide":"Show"}</label>
+
         <input
           onChange={onChange}
           style={{
@@ -150,6 +171,7 @@ const AdminRegister = (props) => {
           type="date"
           name="dob"
           value={Credentials.dob}
+          required
           id="dob"
         />
         <input
@@ -167,6 +189,7 @@ const AdminRegister = (props) => {
           name="gender"
           id="gender"
           value={Credentials.gender}
+          required
         />
 
         <input
@@ -184,6 +207,7 @@ const AdminRegister = (props) => {
           name="mobilenumber"
           id="mobilenumber"
           value={Credentials.mobilenumber}
+          required
         />
 
         <input
@@ -200,9 +224,17 @@ const AdminRegister = (props) => {
           type="text"
           name="address"
           id="address"
+          required
           value={Credentials.address}
         />
+<div className="container" style={{marginLeft:"60px",marginTop:"20px"}}>
 
+<PasswordChecklist 
+rules={["minLength","specialChar","number","capital","lowercase"]}
+minLength={8}
+value={Credentials.password}
+/>
+</div>
         <br />
         <div className="container my-2">
           <button

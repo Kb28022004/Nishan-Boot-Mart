@@ -10,10 +10,10 @@ const Addnotes = () => {
   return (
     <div>
          <div className="container my-3">
-     <h2>Add your notes</h2>
+     <h2>Add your Products</h2>
      <form className='my-3'>
   <div className="mb-3">
-    <label htmlFor="title" className="form-label">Title</label>
+    <label htmlFor="title" className="form-label">Name of the </label>
     <input type="text" className="form-control" id="title" name='title' aria-describedby="emailHelp" onChange={onchange} minLength={5} required/>
    
   </div>
