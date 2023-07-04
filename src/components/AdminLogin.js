@@ -80,6 +80,7 @@ const AdminLogin = (props) => {
           placeholder="Email"
           type="email"
           name="email"
+          value={Credentials.email}
           id="email"
         />
         <input
@@ -95,6 +96,7 @@ const AdminLogin = (props) => {
           placeholder="Passoword"
           type="passoword"
           name="passoword"
+          value={Credentials.passoword}
           id="possoword"
         />
         <br />

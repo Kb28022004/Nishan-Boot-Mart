@@ -74,15 +74,15 @@ const onChange = (e) => {
       >
        
         <h3 style={{textAlign:"center"}}>Create Account</h3>
-        <input onChange={onChange} style={{width:"80%",margin:"7px",padding:"8px",marginLeft:"60px",marginTop:"10px", borderRadius:"8px"}} placeholder="Name" type="text" name="name" id="name" />
-        <input onChange={onChange} style={{width:"80%",margin:"7px",padding:"8px",marginLeft:"60px",marginTop:"10px", borderRadius:"8px"}} placeholder="Email" type="email" name="email" id="email" />
-        <input onChange={onChange} style={{width:"80%",margin:"7px",padding:"8px",marginLeft:"60px",marginTop:"10px", borderRadius:"8px"}} placeholder="Password" type="password" name="password" id="possword" />
-        <input onChange={onChange} style={{width:"80%",margin:"7px",padding:"8px",marginLeft:"60px",marginTop:"10px", borderRadius:"8px"}} placeholder="Date of Birth" type="date" name="dob" id="dob" />
-        <input onChange={onChange} style={{width:"80%",margin:"7px",padding:"8px",marginLeft:"60px",marginTop:"10px", borderRadius:"8px"}} placeholder="Gender" type="text" name="gender" id="gender" />
+        <input onChange={onChange} style={{width:"80%",margin:"7px",padding:"8px",marginLeft:"60px",marginTop:"10px", borderRadius:"8px"}} placeholder="Name" type="text" value={Credentials.name} name="name" id="name" />
+        <input onChange={onChange} style={{width:"80%",margin:"7px",padding:"8px",marginLeft:"60px",marginTop:"10px", borderRadius:"8px"}} placeholder="Email" type="email" value={Credentials.email} name="email" id="email" />
+        <input onChange={onChange} style={{width:"80%",margin:"7px",padding:"8px",marginLeft:"60px",marginTop:"10px", borderRadius:"8px"}} placeholder="Password" type="password" value={Credentials.password} name="password" id="possword" />
+        <input onChange={onChange} style={{width:"80%",margin:"7px",padding:"8px",marginLeft:"60px",marginTop:"10px", borderRadius:"8px"}} placeholder="Date of Birth" type="date" value={Credentials.dob} name="dob" id="dob" />
+        <input onChange={onChange} style={{width:"80%",margin:"7px",padding:"8px",marginLeft:"60px",marginTop:"10px", borderRadius:"8px"}} placeholder="Gender" type="text" value={Credentials.gender} name="gender" id="gender" />
 
-        <input onChange={onChange} style={{width:"80%",margin:"7px",padding:"8px",marginLeft:"60px",marginTop:"10px", borderRadius:"8px"}} placeholder="Mobile number" type="text" name="mobilenumber" id="mobilenumber" />
+        <input onChange={onChange} style={{width:"80%",margin:"7px",padding:"8px",marginLeft:"60px",marginTop:"10px", borderRadius:"8px"}} placeholder="Mobile number" value={Credentials.mobilenumber} type="text" name="mobilenumber" id="mobilenumber" />
 
-        <input onChange={onChange} style={{width:"80%",margin:"7px",padding:"8px",marginLeft:"60px",marginTop:"10px", borderRadius:"8px"}} placeholder="Address" type="text" name="address" id="address" />
+        <input onChange={onChange} style={{width:"80%",margin:"7px",padding:"8px",marginLeft:"60px",marginTop:"10px", borderRadius:"8px"}} placeholder="Address" value={Credentials.address} type="text" name="address" id="address" />
 
 
         <br />

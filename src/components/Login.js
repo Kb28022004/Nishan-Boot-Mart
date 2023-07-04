@@ -69,8 +69,8 @@ const Login = (props) => {
       >
         
         <h3  style={{textAlign:"center"}}>Members Login</h3>
-        <input onChange={onChange} style={{width:"80%",margin:"7px",padding:"8px",marginLeft:"60px",marginTop:"10px", borderRadius:"8px"}} placeholder="Email" type="email" name="email" id="email" />
-        <input  onChange={onChange}style={{width:"80%",margin:"7px",padding:"8px",marginLeft:"60px",marginTop:"10px", borderRadius:"8px"}} placeholder="Password" type="password" name="passoword" id="possoword" />
+        <input onChange={onChange} style={{width:"80%",margin:"7px",padding:"8px",marginLeft:"60px",marginTop:"10px", borderRadius:"8px"}} placeholder="Email" value={Credentials.email} type="email" name="email" id="email" />
+        <input  onChange={onChange}style={{width:"80%",margin:"7px",padding:"8px",marginLeft:"60px",marginTop:"10px", borderRadius:"8px"}} placeholder="Password"  value={Credentials.passoword} type="password" name="passoword" id="possoword" />
         <br />
         <div className="container my-2" >
 
