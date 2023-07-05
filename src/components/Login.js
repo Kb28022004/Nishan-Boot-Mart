@@ -126,6 +126,7 @@ const Login = (props) => {
             Log In{" "}
           </button>
           <h5 style={{ marginLeft: "220px", marginTop: "12px" }}>or</h5>
+          
           <button
             style={{
               fontWeight: "bold",

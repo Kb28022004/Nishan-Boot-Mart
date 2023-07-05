@@ -44,6 +44,7 @@ const Contact = () => {
         allowFullScreen=""
         loading="lazy"
         referrerPolicy="no-referrer-when-downgrade"
+        title="home"
       ></iframe>
       <div className="container">
         <div  className="contact-form">
