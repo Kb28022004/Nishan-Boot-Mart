@@ -79,12 +79,14 @@ const Login = (props) => {
             marginLeft: "60px",
             marginTop: "10px",
             borderRadius: "8px",
+          textTransform:"lowercase"
           }}
           placeholder="Email"
           value={Credentials.email}
           type="email"
           name="email"
           id="email"
+        
         />
         <input
           onChange={onChange}
@@ -95,6 +97,8 @@ const Login = (props) => {
             marginLeft: "60px",
             marginTop: "10px",
             borderRadius: "8px",
+            textTransform:"lowercase"
+
           }}
           placeholder="Password"
           value={Credentials.password}
@@ -127,18 +131,29 @@ const Login = (props) => {
           </button>
           <h5 style={{ marginLeft: "220px", marginTop: "12px" }}>or</h5>
           
+          <div className="container grid grid-two-column">
+  <div className="container">
+<div className="container">
+    <img style={{height:"22px",width:"2%",  position:"absolute",left:"41.5%",bottom:"36%"}} src="./images/google3.jpg" alt="" />
+  </div>
+
           <button
             style={{
-              fontWeight: "bold",
-              width: "40%",
-              textAlign: "center",
-              marginLeft: "130px",
+            
+              width: "115%",
+              height:"41px",
+              fontSize:"15px",
+             backgroundColor:"white",
+             color:"black",
+              marginLeft: "112px",
               borderRadius: "12px",
             }}
             className="btn btn-success"
           >
             Sign in with google
           </button>
+</div>
+          </div>
           <h6 style={{ marginTop: "22px", marginLeft: "180px" }}>
             New users ?{" "}
             <b

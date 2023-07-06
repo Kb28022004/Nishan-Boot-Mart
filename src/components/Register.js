@@ -20,42 +20,40 @@ const [Show, setShow] = useState(false)
     setShow(!Show)
   }
   const [Credentials, setCredentials] = useState({
-    name: "",
+    FullName: "",
     email: "",
     password: "",
-    dob: "",
+    dateOfbirth: "",
     gender: "",
-    mobilenumber: "",
+    MobileNumber: "",
     address: "",
   });
   const history = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let { name, email, password, dob, gender, mobilenumber, address } =
+    let { FullName, email, password, dateOfbirth, gender, MobileNumber, address } =
       Credentials;
     const response = await fetch(
-      `http://localhost:3000/api/v1/auth/createuser`,
+      `http://localhost:5000/signup`,
       {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+      
         body: JSON.stringify({
-          name,
+          FullName,
           password,
           email,
-          dob,
+          dateOfbirth,
           gender,
-          mobilenumber,
+          MobileNumber,
           address,
         }),
       }
     );
     const json = response.json();
-    // console.log(json);
+    console.log(json);
     if (json) {
       //save the authtoken and redirect
-      localStorage.setItem("token", json.authtoken);
+      localStorage.setItem("token", json.token);
       history("/");
       props.showAlert("Account is created successfully", "success");
     } else {
@@ -105,12 +103,13 @@ const [Show, setShow] = useState(false)
             marginLeft: "60px",
             marginTop: "10px",
             borderRadius: "8px",
+            textTransform:"lowercase"
           }}
-          placeholder="Name"
+          placeholder="Full Name"
           type="text"
           value={Credentials.name}
-          name="name"
-          id="name"
+          name="FullName"
+          id="FullName"
           required
         />
         <input
@@ -122,6 +121,7 @@ const [Show, setShow] = useState(false)
             marginLeft: "60px",
             marginTop: "10px",
             borderRadius: "8px",
+            textTransform:"lowercase"
           }}
           placeholder="Email"
           type="email"
@@ -140,6 +140,7 @@ const [Show, setShow] = useState(false)
             padding: "8px",
             marginLeft: "60px",
             marginTop: "10px",
+            textTransform:"lowercase",
             borderRadius: "8px",
           }}
           placeholder="Password"
@@ -169,12 +170,13 @@ const [Show, setShow] = useState(false)
             marginLeft: "60px",
             marginTop: "10px",
             borderRadius: "8px",
+            textTransform:"lowercase"
           }}
           placeholder="Date of Birth"
           type="date"
           value={Credentials.dob}
-          name="dob"
-          id="dob"
+          name="dateOfbirth"
+          id="dateOfbirth"
           required
         />
         <input
@@ -186,7 +188,7 @@ const [Show, setShow] = useState(false)
             marginLeft: "60px",
             marginTop: "10px",
             borderRadius: "8px",
-
+            textTransform:"lowercase"
           }}
           placeholder="Gender"
           type="text"
@@ -205,12 +207,13 @@ const [Show, setShow] = useState(false)
             marginLeft: "60px",
             marginTop: "10px",
             borderRadius: "8px",
+            textTransform:"lowercase"
           }}
           placeholder="Mobile number"
           value={Credentials.mobilenumber}
-          type="text"
-          name="mobilenumber"
-          id="mobilenumber"
+          type="number"
+          name="MobileNumber"
+          id="MobileNumber"
           required
         />
 
@@ -223,6 +226,7 @@ const [Show, setShow] = useState(false)
             marginLeft: "60px",
             marginTop: "10px",
             borderRadius: "8px",
+            textTransform:"lowercase"
           }}
           placeholder="Address"
           value={Credentials.address}
@@ -255,18 +259,30 @@ value={Credentials.password}
             Sign Up
           </button>
           <h5 style={{ marginLeft: "220px", marginTop: "12px" }}>or</h5>
+          <div className="container grid grid-two-column">
+  <div className="container">
+<div className="container">
+    <img style={{height:"22px",width:"2%",  position:"absolute",left:"41%",top:"114%"}} src="./images/google3.jpg" alt="" />
+  </div>
+
           <button
             style={{
-              fontWeight: "bold",
-              width: "40%",
-              textAlign: "center",
-              marginLeft: "130px",
+            
+              width: "115%",
+              height:"41px",
+              fontSize:"15px",
+             backgroundColor:"white",
+             color:"black",
+              marginLeft: "110px",
               borderRadius: "12px",
             }}
             className="btn btn-success"
           >
-            Sign up with google
+            Sign Up with google
           </button>
+</div>
+</div>
+
           <h6 style={{ marginTop: "22px", marginLeft: "160px" }}>
             Already have an account ?{" "}
             <b
