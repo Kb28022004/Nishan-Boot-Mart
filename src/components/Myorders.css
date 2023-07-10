@@ -1,0 +1,63 @@
+.yourorders{
+display: flex;
+flex-direction: column;
+align-items: center;
+width: 100%;
+/* height: 100%; */
+padding: 20px;
+}
+
+.yourorders table{
+    width: 100%;
+    overflow: hidden;
+    border: 1px solid rgba(207, 207, 207, 0.712);
+    border-collapse: collapse;
+    border-radius: 5px;
+}
+.yourorders table tr{
+    border: 1px solid rgba(207, 207, 207, 0.712);
+    border-radius: 5px;
+    /* padding: 10px;
+    margin: 10px; */
+
+}
+.yourorders table tr th {
+    border: 1px solid rgba(207, 207, 207, 0.712);
+    border-radius: 5px;
+   padding: 10px 20px;
+   background-color: rgb(173, 26, 26);
+   color: gray;
+}
+.yourorders table tr td {
+    border: 1px solid rgba(207, 207, 207, 0.712);
+    border-radius: 5px;
+   padding: 10px 20px;
+
+   color: black;
+}
+.yourorders table tr td p {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    margin-bottom: 0px;
+}
+.yourorders table tr td p .greendot{
+    content: '';
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: green;
+}
+.yourorders table tr td p .reddot{
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: red;
+}
+.yourorders table tr td p .yellowdot{
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: yellow;
+}

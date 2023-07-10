@@ -1,10 +1,37 @@
 import { Box } from "@mui/material";
 import React, { useState } from "react";
 import { Button } from "../styles/Button";
+import { useEffect } from "react";
+import { NavLink } from "react-router-dom";
 // import noteContext from '../Context/notes/noteContext';
 
 const Addnotes = () => {
   const [note, setnote] = useState({ title: "", description: "", tag: "" });
+  const [files,setFiles]=useState();
+  const [previews, setpreviews] = useState();
+
+  //rendring previews
+  useEffect(() => {
+    if(!files) return;
+
+  let temp=[];
+  for (let i = 0; i < files.length; i++) {
+ temp.push(URL.createObjectURL(files[i]));
+    
+  }
+  const objectUrls=temp;
+  setpreviews(objectUrls)
+
+  //free memory
+  for (let i = 0; i < objectUrls.length; i++) {
+   return()=>{
+URL.revokeObjectURL(objectUrls[i])
+   }
+    
+  }
+   
+  }, [files])
+  
   const onchange = (e) => {
     setnote({ ...note, [e.target.name]: e.target.value });
   };
@@ -14,7 +41,7 @@ const Addnotes = () => {
       sx={{
         backgroundColor: "white",
         color: "black",
-        height: "650px",
+        height: "700px",
         width: "40%",
         padding: "20px",
         margin: "0px auto",
@@ -25,7 +52,7 @@ const Addnotes = () => {
     >
       <h2 style={{ textAlign: "center" }}>Add your Products</h2>
       <hr style={{ width: "50%", marginLeft: "120px", fontWeight: "bold" }} />
-      <form className="my-3" style={{ paddingTop: "32px" }}>
+      <form className="my-3" style={{ paddingTop: "32px"}}>
         <div className="mb-3">
           <input
             type="text"
@@ -37,7 +64,7 @@ const Addnotes = () => {
             onChange={onchange}
             required
             minLength={5}
-            style={{ padding: "12px" }}
+            style={{ padding: "12px",textTransform:"lowercase"  }}
             
           />
         </div>
@@ -49,7 +76,7 @@ const Addnotes = () => {
             placeholder="Description"
             name="description"
             required
-            style={{ padding: "12px", marginTop: "18px" }}
+            style={{ padding: "12px", marginTop: "18px",textTransform:"lowercase"  }}
             onChange={onchange}
             minLength={5}
             />
@@ -58,7 +85,7 @@ const Addnotes = () => {
           <input
             type="number"
             className="form-control"
-            style={{ padding: "12px", marginTop: "18px" }}
+            style={{ padding: "12px", marginTop: "18px",textTransform:"lowercase"  }}
             id="price"
             placeholder="Price"
             required
@@ -70,7 +97,7 @@ const Addnotes = () => {
           <input
             type="text"
             className="form-control"
-            style={{ padding: "12px", marginTop: "18px" }}
+            style={{ padding: "12px", marginTop: "18px",textTransform:"lowercase"  }}
             id="brand"
             placeholder="Brand"
             name="brand"
@@ -82,12 +109,13 @@ const Addnotes = () => {
           <input
             type="text"
             className="form-control"
-            style={{ padding: "12px", marginTop: "18px" }}
+            style={{ padding: "12px", marginTop: "18px",textTransform:"lowercase"  }}
             id="category"
             required
             placeholder="category"
             name="category"
             onChange={onchange}
+            autoComplete="off"
           />
         </div>
         <div className="mb-3">
@@ -95,7 +123,7 @@ const Addnotes = () => {
             type="number"
             className="form-control"
             id="size"
-            style={{ padding: "12px", marginTop: "18px" }}
+            style={{ padding: "12px", marginTop: "18px",textTransform:"lowercase"  }}
             name="size"
             placeholder="Size"
             required
@@ -104,15 +132,25 @@ const Addnotes = () => {
         </div>
         <div className="mb-3">
           <input
-            type="text"
+            type="file"
+            accept="image/jpg, image/jpef, image/png"
+            multiple
+            onchange={(e)=>{
+              if(e.target.files && e.target.files.length>0){
+                setFiles(e.target.files)              }
+            }}
+            
             className="form-control"
             id="image"
             name="image"
             required
-            style={{ padding: "12px", marginTop: "18px" }}
-            placeholder="Image_url"
+            style={{ padding: "12px", marginTop: "18px",textTransform:"lowercase"  }}
+          
             onChange={onchange}
           />
+          {previews && previews.map((pic)=>{
+            return <img src={pic} alt="boot" />
+          })}
         </div>
 
         <Button
@@ -126,6 +164,21 @@ const Addnotes = () => {
           {" "}
           Add{" "}
         </Button>
+        <NavLink to="/adminproduct">
+
+        <Button
+          style={{
+            borderRadius: "8px",
+            height: "50px",
+            marginTop: "18px",
+            marginLeft: "70px",
+            backgroundColor:"red"
+          }}
+        >
+          {" "}
+          See your uploaded product{" "}
+        </Button>
+        </NavLink>
       </form>
     </Box>
   );

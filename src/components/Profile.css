@@ -1,0 +1,38 @@
+
+.userprofile{
+    display: flex;
+    flex-direction: column;
+
+}
+.userprofilein{
+    display: flex;
+    width: 100%;
+    height: 500px;
+    justify-content: center;
+    margin-top: 10vh;
+    gap: 20px;
+}
+.userprofile .userprofilein .left {
+    width: 20%;
+    /* background-color: aqua; */
+    border: 1px solid rgb(207, 207, 207);
+    border-radius: 4px;
+    min-height: 50vh;
+
+}
+.userprofile .userprofilein .right { 
+    width: 60%;
+    /* background-color: aqua; */
+    border: 1px solid rgb(207, 207, 207);
+    border-radius: 4px;
+    min-height: 50vh;
+
+}
+.img{
+    width: 20%;
+    height: auto;
+   margin-left: 550px;
+ 
+    position: relative;
+
+}

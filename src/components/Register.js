@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { Box } from "@mui/material";
 import { NavLink } from "react-router-dom";
-
+import GoogleLogin from "react-google-login";
 import PasswordChecklist from "react-password-checklist";
 
 import { useNavigate } from "react-router-dom";
 // import { useState } from "react";
 
 const Register = (props) => {
-const [Show, setShow] = useState(false)
+  const [Show, setShow] = useState(false);
 
   const navigate = useNavigate();
 
@@ -16,9 +16,17 @@ const [Show, setShow] = useState(false)
     navigate("/login");
   };
 
-  const handleShow=()=>{
-    setShow(!Show)
-  }
+  const handleShow = () => {
+    setShow(!Show);
+  };
+
+  const googleAuth = () => {
+    window.open(
+      `${process.env.REACT_APP_API_URL}/auth/google/callback`,
+      "_self"
+    );
+  };
+
   const [Credentials, setCredentials] = useState({
     FullName: "",
     email: "",
@@ -31,24 +39,28 @@ const [Show, setShow] = useState(false)
   const history = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let { FullName, email, password, dateOfbirth, gender, MobileNumber, address } =
-      Credentials;
-    const response = await fetch(
-      `http://localhost:5000/signup`,
-      {
-        method: "POST",
-      
-        body: JSON.stringify({
-          FullName,
-          password,
-          email,
-          dateOfbirth,
-          gender,
-          MobileNumber,
-          address,
-        }),
-      }
-    );
+    let {
+      FullName,
+      email,
+      password,
+      dateOfbirth,
+      gender,
+      MobileNumber,
+      address,
+    } = Credentials;
+    const response = await fetch(`http://localhost:5000/signup`, {
+      method: "POST",
+
+      body: JSON.stringify({
+        FullName,
+        password,
+        email,
+        dateOfbirth,
+        gender,
+        MobileNumber,
+        address,
+      }),
+    });
     const json = response.json();
     console.log(json);
     if (json) {
@@ -94,158 +106,187 @@ const [Show, setShow] = useState(false)
         }}
       >
         <h3 style={{ textAlign: "center" }}>Create Account</h3>
-        <input
-          onChange={onChange}
-          style={{
-            width: "80%",
-            margin: "7px",
-            padding: "8px",
-            marginLeft: "60px",
-            marginTop: "10px",
-            borderRadius: "8px",
-            textTransform:"lowercase"
-          }}
-          placeholder="Full Name"
-          type="text"
-          value={Credentials.name}
-          name="FullName"
-          id="FullName"
-          required
-        />
-        <input
-          onChange={onChange}
-          style={{
-            width: "80%",
-            margin: "7px",
-            padding: "8px",
-            marginLeft: "60px",
-            marginTop: "10px",
-            borderRadius: "8px",
-            textTransform:"lowercase"
-          }}
-          placeholder="Email"
-          type="email"
-          value={Credentials.email}
-          name="email"
-          id="email"
-          required
-        />
-  
+        <form className="needs-validation" autoComplete="off" onSubmit={handleSubmit}>
+          <div className="form-group was-validated">
+            <input
+              onChange={onChange}
+              style={{
+                width: "80%",
+                margin: "7px",
+                padding: "8px",
+                marginLeft: "60px",
+                marginTop: "10px",
+                borderRadius: "8px",
+                textTransform: "lowercase",
+              }}
+              placeholder="Full Name"
+              type="text"
+              value={Credentials.name}
+              name="FullName"
+              id="FullName"
+              required
+            />
+            <div className="invalid-feedback" style={{ textAlign: "center" }}>
+              Please enter your name
+            </div>
+          </div>
+          <div className="form-group was-validated" 
+>
+            <input
+              onChange={onChange}
+              style={{
+                width: "80%",
+                margin: "7px",
+                padding: "8px",
+                marginLeft: "60px",
+                marginTop: "10px",
+                borderRadius: "8px",
+                textTransform: "lowercase",
+              }}
+              placeholder="Email"
+              type="email"
+              value={Credentials.email}
+              name="email"
+              id="email"
+              autoComplete="off"
+              required
+            />
+            <div className="invalid-feedback" style={{ textAlign: "center" }}>
+              Please enter the email
+            </div>
+          </div>
+          <div className="form-group was-validated">
+            <input
+              onChange={onChange}
+              style={{
+                width: "80%",
+                margin: "7px",
+                padding: "8px",
+                marginLeft: "60px",
+                marginTop: "10px",
+                textTransform: "lowercase",
+                borderRadius: "8px",
+              }}
+              placeholder="Password"
+              type={Show ? "text" : "password"}
+              autoComplete="off"
+              value={Credentials.password}
+              name="password"
+              id="possword"
+              required
+            />
+            <div className="invalid-feedback" style={{ textAlign: "center" }}>
+              Please enter correct password
+            </div>
+          </div>
 
-        <input
-          onChange={onChange}
-          style={{
-            width: "80%",
-            margin: "7px",
-            padding: "8px",
-            marginLeft: "60px",
-            marginTop: "10px",
-            textTransform:"lowercase",
-            borderRadius: "8px",
-          }}
-          placeholder="Password"
-          type={Show?"text":"password"}
-          
-          value={Credentials.password}
-          name="password"
-          id="possword"
-          required
-        />
-        <label style={{
-          position:"absolute",
-          // padding:"30px 0px 0px 0px",
-          top:"54%",
-          right:"36%",
-          fontWeight:"bold",
-        
-      }} 
-      onClick={handleShow}>{Show?"Hide":"Show"}</label>
-    
-        <input
-          onChange={onChange}
-          style={{
-            width: "80%",
-            margin: "7px",
-            padding: "8px",
-            marginLeft: "60px",
-            marginTop: "10px",
-            borderRadius: "8px",
-            textTransform:"lowercase"
-          }}
-          placeholder="Date of Birth"
-          type="date"
-          value={Credentials.dob}
-          name="dateOfbirth"
-          id="dateOfbirth"
-          required
-        />
-        <input
-          onChange={onChange}
-          style={{
-            width: "80%",
-            margin: "7px",
-            padding: "8px",
-            marginLeft: "60px",
-            marginTop: "10px",
-            borderRadius: "8px",
-            textTransform:"lowercase"
-          }}
-          placeholder="Gender"
-          type="text"
-          value={Credentials.gender}
-          name="gender"
-          id="gender"
-          required
-        />
+          <label
+            style={{
+              position: "absolute",
+              // padding:"30px 0px 0px 0px",
+              top: "56%",
+              right: "36%",
+              fontWeight: "bold",
+            }}
+            onClick={handleShow}
+          >
+            {Show ? "Hide" : "Show"}
+          </label>
 
-        <input
-          onChange={onChange}
-          style={{
-            width: "80%",
-            margin: "7px",
-            padding: "8px",
-            marginLeft: "60px",
-            marginTop: "10px",
-            borderRadius: "8px",
-            textTransform:"lowercase"
-          }}
-          placeholder="Mobile number"
-          value={Credentials.mobilenumber}
-          type="number"
-          name="MobileNumber"
-          id="MobileNumber"
-          required
-        />
+          <input
+            onChange={onChange}
+            style={{
+              width: "80%",
+              margin: "7px",
+              padding: "8px",
+              marginLeft: "60px",
+              marginTop: "10px",
+              borderRadius: "8px",
+              textTransform: "lowercase",
+            }}
+            placeholder="Date of Birth"
+            type="date"
+            value={Credentials.dob}
+            name="dateOfbirth"
+            id="dateOfbirth"
+            required
+          />
 
-        <input
-          onChange={onChange}
-          style={{
-            width: "80%",
-            margin: "7px",
-            padding: "8px",
-            marginLeft: "60px",
-            marginTop: "10px",
-            borderRadius: "8px",
-            textTransform:"lowercase"
-          }}
-          placeholder="Address"
-          value={Credentials.address}
-          type="text"
-          name="address"
-          id="address"
-          required
-        />
+          <input
+            onChange={onChange}
+            style={{
+              width: "80%",
+              margin: "7px",
+              padding: "8px",
+              marginLeft: "60px",
+              marginTop: "10px",
+              borderRadius: "8px",
+              textTransform: "lowercase",
+            }}
+            placeholder="Gender"
+            type="text"
+            value={Credentials.gender}
+            name="gender"
+            id="gender"
+            required
+          />
 
-<div className="container" style={{marginLeft:"60px",marginTop:"20px"}}>
+          <input
+            onChange={onChange}
+            style={{
+              width: "80%",
+              margin: "7px",
+              padding: "8px",
+              marginLeft: "60px",
+              marginTop: "10px",
+              borderRadius: "8px",
+              textTransform: "lowercase",
+            }}
+            placeholder="Mobile number"
+            value={Credentials.MobileNumber}
+            type="number"
+            name="MobileNumber"
+            id="MobileNumber"
+            required
+          />
 
-<PasswordChecklist 
-rules={["minLength","specialChar","number","capital","lowercase"]}
-minLength={8}
-value={Credentials.password}
-/>
-</div>
-        <br />
-        <div className="container my-2">
+          <input
+            onChange={onChange}
+            style={{
+              width: "80%",
+              margin: "7px",
+              padding: "8px",
+              marginLeft: "60px",
+              marginTop: "10px",
+              borderRadius: "8px",
+              textTransform: "lowercase",
+            }}
+            placeholder="Address"
+            value={Credentials.address}
+            type="text"
+            name="address"
+            id="address"
+            required
+          />
+
+          <div
+            className="container"
+            style={{ marginLeft: "60px", marginTop: "20px" }}
+          >
+            <PasswordChecklist
+              rules={[
+                "minLength",
+                "specialChar",
+                "number",
+                "capital",
+                "lowercase",
+              ]}
+              minLength={8}
+              value={Credentials.password}
+            />
+          </div>
+          <br />
+
           <button
             style={{
               marginLeft: "200px",
@@ -253,46 +294,31 @@ value={Credentials.password}
               color: "white",
               fontWeight: "bold",
             }}
-            onClick={handleSubmit}
             className="btn btn-warning"
           >
             Sign Up
           </button>
-          <h5 style={{ marginLeft: "220px", marginTop: "12px" }}>or</h5>
-          <div className="container grid grid-two-column">
-  <div className="container">
-<div className="container">
-    <img style={{height:"22px",width:"2%",  position:"absolute",left:"41%",top:"114%"}} src="./images/google3.jpg" alt="" />
-  </div>
+        </form>
+        <h5 style={{ marginLeft: "220px", marginTop: "12px" }}>or</h5>
+        <div style={{marginLeft:"150px"}}>
 
-          <button
-            style={{
-            
-              width: "115%",
-              height:"41px",
-              fontSize:"15px",
-             backgroundColor:"white",
-             color:"black",
-              marginLeft: "110px",
-              borderRadius: "12px",
-            }}
-            className="btn btn-success"
-          >
-            Sign Up with google
-          </button>
-</div>
+<GoogleLogin
+
+clientId=""
+onSuccess={googleAuth}
+onFailure={googleAuth}
+cookiePolicy="single_host_origin"
+>
+  <span>Sign up with google</span>
+</GoogleLogin>
 </div>
 
-          <h6 style={{ marginTop: "22px", marginLeft: "160px" }}>
-            Already have an account ?{" "}
-            <b
-              onClick={handleLogin}
-              style={{ color: "red", cursor: "pointer" }}
-            >
-              Log in
-            </b>
-          </h6>
-        </div>
+        <h6 style={{ marginTop: "22px", marginLeft: "160px" }}>
+          Already have an account ?{" "}
+          <b onClick={handleLogin} style={{ color: "red", cursor: "pointer" }}>
+            Log in
+          </b>
+        </h6>
 
         <p style={{ marginLeft: "230px", fontSize: "14px" }}>or</p>
         <NavLink to={"/AdminRegister"}>

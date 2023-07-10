@@ -1,0 +1,41 @@
+
+.accountsettings{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    /* justify-content: center; */
+    align-items: center;
+}
+
+.accountsettings h1{
+    padding: 10px 20px;
+}
+.accountsettings .form{
+display: flex;
+flex-direction: row;
+flex-wrap: wrap;
+justify-content: space-between;
+width: 100%;
+padding: 10px 20px;
+gap: 20px;
+
+}
+.accountsettings .form .form-group{
+    display: flex;
+    flex-direction: column;
+    width: 45%;
+    margin: 10px;
+    text-transform: uppercase;
+    gap: 8px;
+
+}
+
+.accountsettings .form .form-group input{
+    border-radius: 6px;
+    padding: 10px 20px;
+    border: 1px solid rgb(207,207, 207);
+    outline: none;
+}
+.accountsettings .form .form-group input:focus{
+    border: 1px solid var(--col1);
+}

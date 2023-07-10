@@ -1,13 +1,14 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import styled from "styled-components";
 import { FiShoppingCart } from "react-icons/fi";
-import { CgMenu, CgClose } from "react-icons/cg";
+import { CgMenu, CgClose, CgProfile } from "react-icons/cg";
 import { Button } from "../styles/Button";
+// import { useAuth0 } from "@auth0/auth0-react";
 
 const Nav = () => {
   const [menuIcon, setMenuIcon] = useState();
-
+  // const { isAuthenticated, logout, user } = useAuth0();
   const Nav = styled.nav`
     .navbar-lists {
       display: flex;
@@ -225,6 +226,7 @@ const Nav = () => {
               Contact
             </NavLink>
           </li>
+
           <li>
             <NavLink
               to="/login"
@@ -235,20 +237,46 @@ const Nav = () => {
               <Button style={{ borderRadius: "12px" }}>LOGIN</Button>
             </NavLink>
           </li>
-          <li>
-            <NavLink
-              to="/register"
-              className="navbar-link "
-              onClick={() => setMenuIcon(false)}
-            >
-              <Button style={{ borderRadius: "12px" }}>REGISTER</Button>
-            </NavLink>
-          </li>
+
           <li>
             <NavLink to="/cart" className="navbar-link cart-trolley--link">
               <FiShoppingCart className="cart-trolley" />
               <span className="cart-total--item"> 10 </span>
             </NavLink>
+          </li>
+          <li className="nav-item dropdown">
+            <a
+              className="nav-link dropdown-toggle"
+              href="/"
+              id="navbarDropdown"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <CgProfile
+                style={{ height: "32px", width: "100%", color: "black" }}
+              />
+            </a>
+            <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li>
+                <Link className="dropdown-item" to="/profile/accountsettings">
+                  My Profile
+                </Link>
+              </li>
+              <li>
+                <a className="dropdown-item" href="/">
+                  Another action
+                </a>
+              </li>
+              <li>
+                <hr className="dropdown-divider" />
+              </li>
+              <li>
+                <a className="dropdown-item" href="/">
+                  Something else here
+                </a>
+              </li>
+            </ul>
           </li>
         </ul>
 

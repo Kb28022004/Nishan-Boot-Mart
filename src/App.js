@@ -12,11 +12,14 @@ import AdminLogin from "./components/AdminLogin";
 import AdminRegister from "./components/AdminRegister";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
-import Login from "./components/Login";
+import Login from "./components/user.js/Login";
 import Register from "./components/Register";
 import Dashboard from "./components/Dashboard";
 import Footer from "./components/Footer";
 import { useState } from "react";
+import AdminProducts from "./components/AdminProducts";
+import Profile from "./components/Profile";
+import './App.css'
 
 function App() {
   const theme = {
@@ -69,6 +72,11 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/women" element={<Women />} />
           <Route path="/kids" element={<Kids />} />
+          {<Login/> &&   <Route
+            exact
+            path="/profile/:activepage"
+            element={< Profile />}
+          /> }
           <Route path="/login" element={<Login showAlert={showAlert} />} />
           <Route
             path="/register"
@@ -84,6 +92,13 @@ function App() {
             path="/AdminRegister"
             element={<AdminRegister showAlert={showAlert} />}
           />
+           
+           <Route
+            exact
+            path="/adminproduct"
+            element={< AdminProducts />}
+          />
+         
         </Routes>
         <Footer />
       </Router>
