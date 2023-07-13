@@ -5,8 +5,21 @@ import { FiShoppingCart } from "react-icons/fi";
 import { CgMenu, CgClose, CgProfile } from "react-icons/cg";
 import { Button } from "../styles/Button";
 // import { useAuth0 } from "@auth0/auth0-react";
+import { useDispatch, useSelector } from "react-redux";
+import { useAlert } from "react-alert";
+import { logout } from "../action/userActions";
 
 const Nav = () => {
+  const alert = useAlert();
+  const dispatch = useDispatch();
+
+  const { user, loading } = useSelector((state) => state.auth);
+
+  const logoutHandler = () => {
+    // dispatch(logout())
+    // alert.success("Logged Out Successfully")
+  };
+
   const [menuIcon, setMenuIcon] = useState();
   // const { isAuthenticated, logout, user } = useAuth0();
   const Nav = styled.nav`
@@ -227,57 +240,65 @@ const Nav = () => {
             </NavLink>
           </li>
 
-          <li>
-            <NavLink
-              to="/login"
-              className="navbar-link "
-              type="button"
-              onClick={() => setMenuIcon(false)}
-            >
-              <Button style={{ borderRadius: "12px" }}>LOGIN</Button>
-            </NavLink>
-          </li>
-
-          <li>
-            <NavLink to="/cart" className="navbar-link cart-trolley--link">
-              <FiShoppingCart className="cart-trolley" />
-              <span className="cart-total--item"> 10 </span>
-            </NavLink>
-          </li>
-          <li className="nav-item dropdown">
-            <a
-              className="nav-link dropdown-toggle"
-              href="/"
-              id="navbarDropdown"
-              role="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              <CgProfile
-                style={{ height: "32px", width: "100%", color: "black" }}
-              />
-            </a>
-            <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li>
-                <Link className="dropdown-item" to="/profile/accountsettings">
-                  My Profile
-                </Link>
-              </li>
-              <li>
-                <a className="dropdown-item" href="/">
-                  Another action
+          <div>
+            <li>
+              <NavLink to="/cart" className="navbar-link cart-trolley--link">
+                <FiShoppingCart className="cart-trolley" />
+                <span className="cart-total--item"> 10 </span>
+              </NavLink>
+            </li>
+          </div>
+          {!user ? (
+            <>
+              <span>{user && user.name}</span>
+              <li className="nav-item dropdown">
+                <a
+                  className="nav-link dropdown-toggle"
+                  href="/"
+                  id="navbarDropdown"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <CgProfile
+                    style={{ height: "32px", width: "100%", color: "black" }}
+                  />
                 </a>
+                <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li>
+                    <Link
+                      className="dropdown-item"
+                      to="/profile/accountsettings"
+                    >
+                      My Profile
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      onClick={logoutHandler}
+                      className="dropdown-item"
+                      to="/"
+                    >
+                      Logout
+                    </Link>
+                  </li>
+                </ul>
               </li>
+            </>
+          ) : (
+            !loading && (
               <li>
-                <hr className="dropdown-divider" />
+                <NavLink
+                  to="/login"
+                  className="navbar-link "
+                  type="button"
+                  onClick={() => setMenuIcon(false)}
+                >
+                  <Button style={{ borderRadius: "12px" }}>LOGIN</Button>
+                </NavLink>
               </li>
-              <li>
-                <a className="dropdown-item" href="/">
-                  Something else here
-                </a>
-              </li>
-            </ul>
-          </li>
+            )
+          )}
         </ul>
 
         {/* two button for open and close of menu */}

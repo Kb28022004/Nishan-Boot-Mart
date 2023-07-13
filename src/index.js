@@ -1,32 +1,30 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
-import { ProductProvider } from './context/ProductContext';
-import { Auth0Provider } from '@auth0/auth0-react';
+
+// import { ProductProvider } from './context/ProductContext';
+// import { Auth0Provider } from '@auth0/auth0-react';
+import { Provider } from 'react-redux';
+import store from './store';
+import { positions,transitions,Provider as AlertProvider } from 'react-alert';
+import AlertTemplate from 'react-alert-template-basic';
 
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <Auth0Provider
-    domain="dev-zeczam3rz0ja5sq7.us.auth0.com"
-    clientId="JSN04fBA6TkOOi6C9IZtpX6aAKtNvOHv"
-    authorizationParams={{
-      redirect_uri: window.location.origin
-    }}
-  >
-    <ProductProvider>
+const options={
+timeout:5000,
+position:positions.BOTTOM_CENTER,
+transition:transitions.SCALE
+}
 
-    <App />
-    </ProductProvider>
-    </Auth0Provider>,
 
-  </React.StrictMode>
-);
+ReactDOM.render(
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+  <Provider store={store}>
+    <AlertProvider template={AlertTemplate} {...options}>
+ <App /> 
+ </AlertProvider>
+</Provider>,
+
+document.getElementById('root')
+)

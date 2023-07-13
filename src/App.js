@@ -16,12 +16,21 @@ import Login from "./components/user.js/Login";
 import Register from "./components/Register";
 import Dashboard from "./components/Dashboard";
 import Footer from "./components/Footer";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AdminProducts from "./components/AdminProducts";
 import Profile from "./components/Profile";
 import './App.css'
+import { loaduser } from "./action/userActions";
+import store from "./store";
+
 
 function App() {
+
+
+  // useEffect(() => {
+  // store.dispatch(loaduser())
+  // }, [])
+  
   const theme = {
     colors: {
       heading: "rgb(24 24 29)",

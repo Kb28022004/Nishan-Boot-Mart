@@ -1,159 +1,128 @@
-import {useNavigate } from "react-router-dom";
-import { Box } from "@mui/material";
-import { useState } from "react";
+import React,{Fragment,useState,useEffect,} from 'react'
+
+import { useAlert } from 'react-alert'
+import { useDispatch,useSelector } from 'react-redux'
+import {login,clearErrors} from '../action/userActions'
+import { Link} from 'react-router-dom'
+// import {Spinner} from '../Helper/Spinner'
+import { Button } from '../styles/Button'
+import { Box } from '@mui/material'
 import GoogleLogin from "react-google-login";
 
 
-const AdminLogin = (props) => {
-  const [Show, setShow] = useState(false);
 
-  const navigate = useNavigate();
+const AdminLogin = ({history}) => {
+  const [email, setEmail] = useState("")  
+  const [password, setPassword] = useState("")
 
-  const handleRegister = () => {
-    navigate("/AdminRegister");
-  };
-  const handleShow = () => {
-    setShow(!Show);
-  };
+
+  const alert= useAlert()
+  const dispatch=useDispatch()
+
+  const {isAuthenticate,error,loading}=useSelector(state=>state.auth)
+
   const googleAuth = () => {
-    window.open(
-      `${process.env.REACT_APP_API_URL}/auth/google/callback`,
-      "_seld"
-    );
+    // window.open(
+    //   `${process.env.REACT_APP_API_URL}/auth/google/callback`,
+    //   "_seld"
+    // );
   };
-  const [Credentials, setCredentials] = useState({ email: "", password: "" });
-  const history = useNavigate();
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const response = await fetch(`http://localhost:3000/api/v1/auth/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: Credentials.email,
-        password: Credentials.password,
-      }),
-    });
-    const json = response.json();
-    console.log(json);
-    if (json) {
-      //save the authtoken and redirect
-      localStorage.setItem("token", json.authtoken);
 
-      props.showAlert("you are logged in your account", "success");
-      history("/dashboard");
-    } else {
-      props.showAlert("invalid Credentials", "danger");
+  useEffect(() => {
+  
+if(isAuthenticate){
+  history.push('/profile')
+}
+
+    if(error){
+      alert.error(error)
+      dispatch(clearErrors())
     }
-  };
-  const onChange = (e) => {
-    setCredentials({ ...Credentials, [e.target.name]: e.target.value });
-  };
 
+  }, [dispatch,alert,isAuthenticate,error,history])
+
+  const submitHandler=(e)=>{
+    e.preventDefault();
+    dispatch(login(email,password))
+
+  }
+  
   return (
-    <>
-      <div className="container my-4">
-        <h1
-          style={{
-            textAlign: "center",
-            fontSize: "35px",
-            fontWeight: "bold",
-            fontFamily: "revert",
-            color: "blue",
-          }}
-        >
-          Log in form
-        </h1>
-      </div>
-      <Box
+  <Fragment>
+    {
+      loading ? "<Spinner/>":(
+        <Fragment>
+          <Box
         sx={{
           backgroundColor: "white",
           color: "black",
-          height: "350px",
-          width: "40%",
+          height: "550px",
+          width: "30%",
           padding: "20px",
           margin: "0px auto",
           marginTop: "20px",
           borderRadius: "22px",
-          border: "1px solid blue",
+          border: "1px solid black",
+          marginBottom: "80px",
+          boxShadow:"inherit"
         }}
       >
-        <h3 style={{ textAlign: "center" }}>Admin Login</h3>
-        <form className="needs-validation" onSubmit={handleSubmit}>
-          <div className="form-group was-validated">
-            <input
-              onChange={onChange}
-              style={{
-                width: "80%",
-                margin: "7px",
-                padding: "10px",
-                marginLeft: "60px",
-                marginTop: "10px",
-                borderRadius: "8px",
-              }}
-              placeholder="Email"
-              type="email"
-              name="email"
-              value={Credentials.email}
-              id="email"
-              required
-            />
-            <div className="invalid-feedback" style={{ textAlign: "center" }}>
+         
+          <div className="row-wrapper">
+            <div >
+              <form className="needs-validation" onSubmit={submitHandler}>
+              <h3 style={{textAlign:"center"}}> Admin Login</h3>
+              <hr style={{width:"30%",margin:"0px auto"}} />
+<div  >
+  <label htmlFor="email" style={{fontSize:"23px",fontFamily:"initial"}} className='my-2'>Email</label>
+  <div className="form-group was-validated">
+
+  <input type="email"
+  style={{textTransform:"lowercase",borderRadius:"6px",padding:"12px"}}
+  required
+  autoComplete='off'
+  id='email'
+  name='email'
+  className='form-control'
+  value={email}
+  onChange={(e)=>setEmail(e.target.value)}
+   />
+    <div className="invalid-feedback" style={{ textAlign: "center" }}>
               Please enter the valid email
             </div>
           </div>
-          <div className="form-group was-validated">
-            <input
-              onChange={onChange}
-              style={{
-                width: "80%",
-                margin: "7px",
-                padding: "10px",
-                marginLeft: "60px",
-                marginTop: "10px",
-                borderRadius: "8px",
-              }}
-              placeholder="Password"
-              type={Show ? "text" : "password"}
-              name="password"
-              value={Credentials.password}
-              id="password"
-            />
-            <div className="invalid-feedback" style={{ textAlign: "center" }}>
+</div>
+<div className="my-2">
+  <label htmlFor="password"  style={{fontSize:"23px",fontFamily:"initial"}}>Password</label>
+  <div className="form-group was-validated">
+
+  <input type="password"
+  style={{textTransform:"lowercase",borderRadius:"6px",padding:"12px"}}
+  required
+    autoComplete='off'
+  id='password'
+  name='password'
+  className='form-control'
+  value={password}
+  onChange={(e)=>setPassword(e.target.value)}
+   />
+</div>
+<div className="invalid-feedback" style={{ textAlign: "center" }}>
               Please enter the valid password
             </div>
           </div>
-          <label
-            style={{
-              position: "absolute",
-              // padding:"30px 0px 0px 0px",
-              top: "49%",
-              right: "36%",
-              fontWeight: "bold",
-            }}
-            onClick={handleShow}
-          >
-            {Show ? "Hide" : "Show"}
-          </label>
-          <br />
+<div style={{marginTop:"18px"}} >
 
-          <button
-            style={{
-              marginLeft: "230px",
-              borderRadius: "12px",
-              color: "black",
-              fontWeight: "bold",
-            }}
-            className="btn btn-warning"
-          >
-            Log In{" "}
-          </button>
-        </form>
+<Link to='/password/forgot' style={{marginLeft:"260px",color:"black",fontSize:"12px"}}>Forgot Password?</Link>
+</div>
+<Button style={{marginTop:"15px",borderRadius:"8px",height:"50px",width:"100%",backgroundColor:"yellowgreen"}}>Login</Button>
+<div style={{marginTop:"18px"}} >
 
-        <h5 style={{ marginLeft: "247px", marginTop: "12px" }}>or</h5>
-       
-<div style={{marginLeft:"155px"}}>
+<Link to='/adminregister' style={{marginLeft:"300px",color:"black",fontSize:"12px"}} >New User?</Link>
+</div>
+              </form>
+              <h5 style={{textAlign:"center" }}>or</h5>
+              <div style={{textAlign:"center"}}>
 
 <GoogleLogin
 
@@ -163,18 +132,18 @@ onFailure={googleAuth}
 cookiePolicy="single_host_origin"
 />
 </div>
-        <h6 style={{ marginTop: "22px", marginLeft: "210px" }}>
-          New admin ?{" "}
-          <b
-            onClick={handleRegister}
-            style={{ color: "red", cursor: "pointer" }}
-          >
-            Sign Up
-          </b>
-        </h6>
-      </Box>
-    </>
-  );
-};
 
-export default AdminLogin;
+
+            </div>
+          </div>
+
+
+          </Box>
+        </Fragment>
+      )
+    }
+  </Fragment>
+  )
+}
+
+export default AdminLogin
