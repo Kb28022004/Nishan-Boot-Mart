@@ -7,7 +7,6 @@ import Cart from "./components/Card";
 import Men from "./components/Man";
 import Women from "./components/Women";
 import Kids from "./components/Kids";
-import Alerts from "./components/Alerts";
 import AdminLogin from "./components/AdminLogin";
 import AdminRegister from "./components/AdminRegister";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -16,12 +15,16 @@ import Login from "./components/user.js/Login";
 import Register from "./components/Register";
 import Dashboard from "./components/Dashboard";
 import Footer from "./components/Footer";
-import { useEffect, useState } from "react";
+
 import AdminProducts from "./components/AdminProducts";
 import Profile from "./components/Profile";
 import './App.css'
-import { loaduser } from "./action/userActions";
-import store from "./store";
+// import { loaduser } from "./action/userActions";
+// import store from "./store";
+import AccountSettings from "./components/AccountSettings";
+import ForgotPassword from "./components/ForgotPassword";
+import ErrorPage from "./ErrorPage";
+import BrandProducts from "./components/BrandProducts";
 
 
 function App() {
@@ -55,23 +58,14 @@ function App() {
       tab: "998px",
     },
   };
-  const [alert, setalert] = useState(null);
-  const showAlert = (message, type) => {
-    setalert({
-      msg: message,
-      type: type,
-    });
-    setTimeout(() => {
-      setalert(null);
-    }, 1500);
-  };
+ 
 
   return (
     <ThemeProvider theme={theme}>
       <Router>
         <GlobalStyle />
         <Header />
-        <Alerts alert={alert}/>
+        
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
@@ -86,20 +80,20 @@ function App() {
             path="/profile/:activepage"
             element={< Profile />}
           /> }
-          <Route path="/login" element={<Login showAlert={showAlert} />} />
+          <Route path="/login" element={<Login  />} />
           <Route
             path="/register"
-            element={<Register showAlert={showAlert} />}
+            element={<Register />}
           />
           <Route
             exact
             path="/AdminLogin"
-            element={<AdminLogin showAlert={showAlert} />}
+            element={<AdminLogin  />}
           />
           <Route
             exact
             path="/AdminRegister"
-            element={<AdminRegister showAlert={showAlert} />}
+            element={<AdminRegister  />}
           />
            
            <Route
@@ -107,7 +101,26 @@ function App() {
             path="/adminproduct"
             element={< AdminProducts />}
           />
-         
+           <Route
+            exact
+            path="/profile:accountsettings"
+            element={< AccountSettings />}
+          />
+            <Route
+            exact
+            path="/forgotpassword"
+            element={<ForgotPassword/>}
+          />
+          <Route
+            exact
+            path="*"
+            element={<ErrorPage/>}
+          />
+           <Route
+            exact
+            path=""
+            element={<BrandProducts/>}
+          />
         </Routes>
         <Footer />
       </Router>

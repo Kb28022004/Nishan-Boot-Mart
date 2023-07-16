@@ -3,9 +3,13 @@ import { legacy_createStore as createStore } from 'redux'
 import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import { authReducer } from './reducer/userReducer'
+import { userReducer,forgotPasswordReducer } from './reducer/userReducer'
 
 const reducer =combineReducers({
-auth:authReducer
+auth:authReducer,
+user:userReducer,
+forgotPassword:forgotPasswordReducer,
+
 })
 let initialState={}
 

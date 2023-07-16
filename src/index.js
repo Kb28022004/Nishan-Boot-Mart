@@ -9,6 +9,7 @@ import { Provider } from 'react-redux';
 import store from './store';
 import { positions,transitions,Provider as AlertProvider } from 'react-alert';
 import AlertTemplate from 'react-alert-template-basic';
+import { AppProvider } from './context/ProductContext';
 
 
 const options={
@@ -22,9 +23,12 @@ ReactDOM.render(
 
   <Provider store={store}>
     <AlertProvider template={AlertTemplate} {...options}>
+    <AppProvider>
  <App /> 
+ </AppProvider>
  </AlertProvider>
 </Provider>,
+
 
 document.getElementById('root')
 )

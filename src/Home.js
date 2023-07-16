@@ -3,6 +3,7 @@ import React from "react";
 import HeroSection from './components/HeroSection'
 import Services from './components/Services'
 import Trusted from './components/Trusted'
+import BrandProducts from "./components/BrandProducts";
 
 const Home = () => {
   const mydata={
@@ -11,6 +12,8 @@ const Home = () => {
   return <div className="test">
     <>
     <HeroSection data={mydata}/>
+
+    <BrandProducts/>
     <Services/>
     <Trusted/>
     </>

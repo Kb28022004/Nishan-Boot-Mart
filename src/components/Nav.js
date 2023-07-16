@@ -202,36 +202,6 @@ const Nav = () => {
           </li>
           <li>
             <NavLink
-              to="/men"
-              className="navbar-link "
-              style={{ marginLeft: "25px" }}
-              onClick={() => setMenuIcon(false)}
-            >
-              MEN
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/women"
-              className="navbar-link "
-              style={{ marginLeft: "25px" }}
-              onClick={() => setMenuIcon(false)}
-            >
-              WOMEN
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/kids"
-              className="navbar-link "
-              style={{ marginLeft: "25px" }}
-              onClick={() => setMenuIcon(false)}
-            >
-              KIDS
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
               to="/contact"
               className="navbar-link "
               onClick={() => setMenuIcon(false)}
@@ -248,7 +218,7 @@ const Nav = () => {
               </NavLink>
             </li>
           </div>
-          {!user ? (
+          {user ? (
             <>
               <span>{user && user.name}</span>
               <li className="nav-item dropdown">
