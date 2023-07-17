@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { FiShoppingCart } from "react-icons/fi";
 import { CgMenu, CgClose, CgProfile } from "react-icons/cg";
 import { Button } from "../styles/Button";
-// import { useAuth0 } from "@auth0/auth0-react";
 import { useDispatch, useSelector } from "react-redux";
 import { useAlert } from "react-alert";
 import { logout } from "../action/userActions";
@@ -16,12 +15,11 @@ const Nav = () => {
   const { user, loading } = useSelector((state) => state.auth);
 
   const logoutHandler = () => {
-    // dispatch(logout())
-    // alert.success("Logged Out Successfully")
+    dispatch(logout())
+    alert.success("Logged Out Successfully")
   };
 
   const [menuIcon, setMenuIcon] = useState();
-  // const { isAuthenticated, logout, user } = useAuth0();
   const Nav = styled.nav`
     .navbar-lists {
       display: flex;
@@ -202,6 +200,36 @@ const Nav = () => {
           </li>
           <li>
             <NavLink
+              to="men/"
+              className="navbar-link "
+              style={{ marginLeft: "25px" }}
+              onClick={() => setMenuIcon(false)}
+            >
+              MEN
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/women"
+              className="navbar-link "
+              style={{ marginLeft: "25px" }}
+              onClick={() => setMenuIcon(false)}
+            >
+              WOMEN
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/kids"
+              className="navbar-link "
+              style={{ marginLeft: "25px" }}
+              onClick={() => setMenuIcon(false)}
+            >
+              KIDS
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
               to="/contact"
               className="navbar-link "
               onClick={() => setMenuIcon(false)}
@@ -218,7 +246,7 @@ const Nav = () => {
               </NavLink>
             </li>
           </div>
-          {user ? (
+          {!user ? (
             <>
               <span>{user && user.name}</span>
               <li className="nav-item dropdown">

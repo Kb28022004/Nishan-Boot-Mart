@@ -5,7 +5,7 @@ import reducer from '../reducer/ProductReducer'
 
 const AppContext=createContext()
 
-const API="https://localhost:5000/GetProducts";
+// const API="https://localhost:5000/GetProducts";
 const AppProvider=({children})=>{
 
     const initialState={
@@ -31,7 +31,7 @@ try {
 
 
     useEffect(() => {
-        getProducts(API);
+        getProducts();
         }, [])
 return <AppContext.Provider value={{...state}}>
     {children}

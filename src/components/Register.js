@@ -2,46 +2,68 @@ import React, { Fragment, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { Button } from "../styles/Button";
 import { Box } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
-const Register = ({ history }) => {
+const Register = () => {
   const [user, setuser] = useState({
-    name: "",
+    Username: "",
     email: "",
     gender: "",
-    phone: "",
-    address: "",
+    MobileNumber: "",
+    Address: "",
     password: "",
-    dateOfBirth: "",
+    DateOfBirth: "",
   });
-
-  const { name, email, password, gender, dateOfBirth, address, phone } = user;
+  const history=useNavigate()
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    const data = await fetch("localhost:5000/api/v1/auth/createuser", {
+    const {
+      Username,
+      email,
+      password,
+      gender,
+      DateOfBirth,
+      Address,
+      MobileNumber,
+    } = user;
+    const data = await fetch("http://localhost:5000/api/user/register", {
+
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        name,
+        Username,
         email,
         password,
-        phone,
-        address,
-        dateOfBirth,
+        gender,
+        MobileNumber,
+        Address,
+        DateOfBirth,
       }),
     });
 
     const json = await data.json();
 
-    if (json) {
-      localStorage.setItem("token", json.authtoken);
-      history("/login");
-      setuser("");
-    } else {
-      alert("invalid credentials");
+    if(json.status===422 || !json){ 
+      window.alert('Invalid Registration')
+     console.log('Invalid registration');
     }
+    else{
+      window.alert(' Registration Successfull')
+      console.log(' Registration successfull');
+      history('/login')
+      setuser("")
+    }
+
+  //   if (json) {
+  //     localStorage.setItem("token", json.authtoken);
+  //     history("/login");
+  //     setuser("");
+  //   } else {
+  //     alert("invalid credentials");
+  //   }
   };
   const onchange = (e) => {
     setuser({ ...user, [e.target.name]: e.target.value });
@@ -67,13 +89,13 @@ const Register = ({ history }) => {
         >
           <div className="row-wrapper">
             <div>
-              <form className="needs-validation" onSubmit={submitHandler}>
+              <form method="POST" className="needs-validation" >
                 <h3 style={{ textAlign: "center" }}> Register</h3>
                 <hr style={{ width: "30%", margin: "0px auto" }} />
 
                 <div>
                   <label
-                    htmlFor="name"
+                    htmlFor="Username"
                     style={{ fontSize: "23px", fontFamily: "initial" }}
                     className="my-2"
                   >
@@ -89,10 +111,10 @@ const Register = ({ history }) => {
                     }}
                     required
                     autoComplete="off"
-                    id="name"
-                    name="name"
+                    id="Username"
+                    name="Username"
                     className="form-control"
-                    value={name}
+                    value={user.Username}
                     onChange={onchange}
                   />
                 </div>
@@ -117,7 +139,7 @@ const Register = ({ history }) => {
                       id="email"
                       name="email"
                       className="form-control"
-                      value={email}
+                      value={user.email}
                       onChange={onchange}
                     />
                     <div
@@ -148,7 +170,7 @@ const Register = ({ history }) => {
                       id="password"
                       name="password"
                       className="form-control"
-                      value={password}
+                      value={user.password}
                       onChange={onchange}
                     />
                   </div>
@@ -176,18 +198,18 @@ const Register = ({ history }) => {
                       borderRadius: "6px",
                       padding: "12px",
                     }}
-                    required
+                    // required
                     autoComplete="off"
                     id="gender"
                     name="gender"
                     className="form-control"
-                    value={gender}
+                    value={user.gender}
                     onChange={onchange}
                   />
                 </div>
                 <div>
                   <label
-                    htmlFor="dob"
+                    htmlFor="DateOfBirth"
                     style={{ fontSize: "23px", fontFamily: "initial" }}
                     className="my-2"
                   >
@@ -201,19 +223,19 @@ const Register = ({ history }) => {
                       borderRadius: "6px",
                       padding: "12px",
                     }}
-                    required
+                    // required
                     autoComplete="off"
-                    id="dateOfBirth"
-                    name="dateOfBirth"
+                    id="DateOfBirth"
+                    name="DateOfBirth"
                     className="form-control"
-                    value={dateOfBirth}
+                    value={user.DateOfBirth}
                     onChange={onchange}
                   />
                 </div>
 
                 <div>
                   <label
-                    htmlFor="phone"
+                    htmlFor="MobileNumber"
                     style={{ fontSize: "23px", fontFamily: "initial" }}
                     className="my-2"
                   >
@@ -221,25 +243,26 @@ const Register = ({ history }) => {
                   </label>
 
                   <input
-                    type="number"
+                    type="MobileNumber"
                     style={{
                       textTransform: "lowercase",
                       borderRadius: "6px",
                       padding: "12px",
                     }}
-                    required
+                    // required
                     autoComplete="off"
-                    id="phone"
-                    name="phone"
+                    id="MobileNumber"
+                    name="MobileNumber"
                     className="form-control"
-                    value={phone}
+                    value={user.MobileNumber}
                     onChange={onchange}
                   />
                 </div>
 
                 <div>
                   <label
-                    htmlFor="address"
+                    htmlFor="
+                    Address"
                     style={{ fontSize: "23px", fontFamily: "initial" }}
                     className="my-2"
                   >
@@ -253,17 +276,16 @@ const Register = ({ history }) => {
                       borderRadius: "6px",
                       padding: "12px",
                     }}
-                    required
+                    // required
                     autoComplete="off"
-                    id="address"
-                    name="address"
+                    id="Address"
+                    name="Address"
                     className="form-control"
-                    value={address}
+                    value={user.Address}
                     onChange={onchange}
                   />
                 </div>
-
-                <Button
+       <Button
                   style={{
                     marginTop: "15px",
                     borderRadius: "8px",
@@ -271,9 +293,11 @@ const Register = ({ history }) => {
                     width: "100%",
                     backgroundColor: "yellowgreen",
                   }}
+                  onClick={submitHandler}
                 >
                   Sign Up
                 </Button>
+
                 <div style={{ marginTop: "18px" }}>
                   <Link
                     to="/login"

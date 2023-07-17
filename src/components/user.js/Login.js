@@ -11,10 +11,10 @@ const Login = ({ history }) => {
     password: "",
   });
 
-  const { email, password } = user;
   const submitHandler = async (e) => {
     e.preventDefault();
-    const data = await fetch("https://localhost:5000/login", {
+    const { email, password } = user;
+    const data = await fetch("https://localhost:5000/api/user/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -24,11 +24,13 @@ const Login = ({ history }) => {
 
     const json = await data.json();
 
-    if (json) {
-      history("/profile:accountsettings");
-      setuser("");
+    if (json.status === 400 || !json) {
+      window.alert("Login failed");
+      console.log("Login failed");
     } else {
-      alert("invalid credentials");
+      window.alert(" Registration Successfull");
+      console.log(" Registration successfull");
+      history("/profile:accountsettings");
     }
   };
 
@@ -55,7 +57,7 @@ const Login = ({ history }) => {
       >
         <div className="row-wrapper">
           <div>
-            <form className="needs-validation" onSubmit={submitHandler}>
+            <form method="POST" className="needs-validation">
               <h3 style={{ textAlign: "center" }}> Members Login</h3>
               <hr style={{ width: "30%", margin: "0px auto" }} />
               <div>
@@ -79,7 +81,7 @@ const Login = ({ history }) => {
                     id="email"
                     name="email"
                     className="form-control"
-                    value={email}
+                    value={user.email}
                     onChange={onchange}
                   />
                   <div
@@ -110,7 +112,7 @@ const Login = ({ history }) => {
                     id="password"
                     name="password"
                     className="form-control"
-                    value={password}
+                    value={user.password}
                     onChange={onchange}
                   />
                 </div>
@@ -134,6 +136,7 @@ const Login = ({ history }) => {
                 </Link>
               </div>
               <Button
+                onClick={submitHandler}
                 style={{
                   marginTop: "15px",
                   borderRadius: "8px",
