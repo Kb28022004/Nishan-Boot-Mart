@@ -258,6 +258,26 @@ const Register = () => {
                     onChange={onchange}
                   />
                 </div>
+                <label 
+                htmlFor="admin"
+                style={{ fontSize: "23px", fontFamily: "initial" }}
+                className="my-4"> Admin : - </label>
+               <input
+                    type="radio"
+                  className="mx-4"
+
+                    id="admin"
+                    name="admin"
+                  />
+            <strong>True</strong>
+             <input
+                    type="radio"
+                    id="admin"
+                    name="admin"
+                    className="mx-4"
+                  />
+             <strong>False</strong>
+
 
                 <div>
                   <label

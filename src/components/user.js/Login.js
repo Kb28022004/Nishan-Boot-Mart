@@ -20,6 +20,7 @@ const Login = ({ history }) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ email, password }),
+      credentials:"include"
     });
 
     const json = await data.json();
@@ -28,8 +29,8 @@ const Login = ({ history }) => {
       window.alert("Login failed");
       console.log("Login failed");
     } else {
-      window.alert(" Registration Successfull");
-      console.log(" Registration successfull");
+      window.alert("Login Successfull");
+      console.log("Login successfull");
       history("/profile:accountsettings");
     }
   };
