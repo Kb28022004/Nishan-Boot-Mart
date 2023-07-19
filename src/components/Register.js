@@ -3,6 +3,7 @@ import { Link, NavLink } from "react-router-dom";
 import { Button } from "../styles/Button";
 import { Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import Validatation from "../Helper/Validatation";
 
 const Register = () => {
   const [user, setuser] = useState({
@@ -16,12 +17,13 @@ const Register = () => {
     isAdmin: "",
   });
 
-  const [errors, seterrors] = useState("");
+  const [errors, seterrors] = useState({});
 
   const history = useNavigate();
 
   const submitHandler = async (e) => {
     e.preventDefault();
+    seterrors(Validatation(user))
 
     const {
       Username,
@@ -58,15 +60,15 @@ const Register = () => {
       }
       else if(data.status===404){
         window.alert('Email is already registered,please try another one')
-        seterrors(json.message)
+        // seterrors(json.message)
 
       }
       else{
-        window.alert('success credentials')
+        window.alert('Register successfully ')
 history('/login')
       }
     } catch (error) {
-      seterrors('An error occured.Please try again.')
+      // seterrors('An error occured.Please try again.')
     }
 
   };
@@ -98,7 +100,7 @@ history('/login')
               <form method="POST" className="needs-validation">
                 <h3 style={{ textAlign: "center" }}> Register</h3>
                 <hr style={{ width: "30%", margin: "0px auto" }} />
-                {errors && <p style={{color:"red",fontWeight:"bold"}}>{errors}</p>}
+                {/* {errors && <p style={{color:"red",fontWeight:"bold"}}>{errors}</p>} */}
                 <div>
                   <label
                     htmlFor="Username"
@@ -123,6 +125,7 @@ history('/login')
                     value={user.Username}
                     onChange={onchange}
                   />
+                  {errors.Username && <p style={{color:"red",fontWeight:"bold"}}>{errors.Username}</p>}
                 </div>
                 <div>
                   <label
@@ -148,6 +151,8 @@ history('/login')
                       value={user.email}
                       onChange={onchange}
                     />
+                    {/* {errors.email && <p style={{color:"red",fontWeight:"bold"}}>{errors.email}</p>} */}
+
                   </div>
                 </div>
                 <div className="my-2">
@@ -173,6 +178,7 @@ history('/login')
                       value={user.password}
                       onChange={onchange}
                     />
+                    {errors.password && <p style={{color:"red",fontWeight:"bold"}}>{errors.password}</p>}
                   </div>
                 </div>
 
