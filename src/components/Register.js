@@ -13,11 +13,16 @@ const Register = () => {
     Address: "",
     password: "",
     DateOfBirth: "",
+    isAdmin: "",
   });
-  const history=useNavigate()
+
+  const [errors, seterrors] = useState("");
+
+  const history = useNavigate();
 
   const submitHandler = async (e) => {
     e.preventDefault();
+
     const {
       Username,
       email,
@@ -26,9 +31,10 @@ const Register = () => {
       DateOfBirth,
       Address,
       MobileNumber,
+      isAdmin,
     } = user;
-    const data = await fetch("http://localhost:5000/api/user/register", {
 
+    const data = await fetch("http://localhost:5000/api/user/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -41,32 +47,32 @@ const Register = () => {
         MobileNumber,
         Address,
         DateOfBirth,
+        isAdmin,
       }),
     });
 
     const json = await data.json();
+    try {
+      if(data.status===400){
+        window.alert('Invalid credentials')
+      }
+      else if(data.status===404){
+        window.alert('Email is already registered,please try another one')
+        seterrors(json.message)
 
-    if(json.status===422 || !json){ 
-      window.alert('Invalid Registration')
-     console.log('Invalid registration');
-    }
-    else{
-      window.alert(' Registration Successfull')
-      console.log(' Registration successfull');
-      history('/login')
-      setuser("")
+      }
+      else{
+        window.alert('success credentials')
+history('/login')
+      }
+    } catch (error) {
+      seterrors('An error occured.Please try again.')
     }
 
-  //   if (json) {
-  //     localStorage.setItem("token", json.authtoken);
-  //     history("/login");
-  //     setuser("");
-  //   } else {
-  //     alert("invalid credentials");
-  //   }
   };
   const onchange = (e) => {
-    setuser({ ...user, [e.target.name]: e.target.value });
+    const newObj = { ...user, [e.target.name]: e.target.value };
+    setuser(newObj);
   };
 
   return (
@@ -89,10 +95,10 @@ const Register = () => {
         >
           <div className="row-wrapper">
             <div>
-              <form method="POST" className="needs-validation" >
+              <form method="POST" className="needs-validation">
                 <h3 style={{ textAlign: "center" }}> Register</h3>
                 <hr style={{ width: "30%", margin: "0px auto" }} />
-
+                {errors && <p style={{color:"red",fontWeight:"bold"}}>{errors}</p>}
                 <div>
                   <label
                     htmlFor="Username"
@@ -142,12 +148,6 @@ const Register = () => {
                       value={user.email}
                       onChange={onchange}
                     />
-                    <div
-                      className="invalid-feedback"
-                      style={{ textAlign: "center" }}
-                    >
-                      Please enter the valid email
-                    </div>
                   </div>
                 </div>
                 <div className="my-2">
@@ -173,12 +173,6 @@ const Register = () => {
                       value={user.password}
                       onChange={onchange}
                     />
-                  </div>
-                  <div
-                    className="invalid-feedback"
-                    style={{ textAlign: "center" }}
-                  >
-                    Please enter the valid password
                   </div>
                 </div>
 
@@ -258,26 +252,33 @@ const Register = () => {
                     onChange={onchange}
                   />
                 </div>
-                <label 
-                htmlFor="admin"
-                style={{ fontSize: "23px", fontFamily: "initial" }}
-                className="my-4"> Admin : - </label>
-               <input
-                    type="radio"
+
+                <label
+                  htmlFor="isAdmin"
+                  style={{ fontSize: "23px", fontFamily: "initial" }}
+                  className="my-4"
+                >
+                  {" "}
+                  Admin : -{" "}
+                </label>
+                <input
+                  type="radio"
                   className="mx-4"
-
-                    id="admin"
-                    name="admin"
-                  />
-            <strong>True</strong>
-             <input
-                    type="radio"
-                    id="admin"
-                    name="admin"
-                    className="mx-4"
-                  />
-             <strong>False</strong>
-
+                  value={user.isAdmin}
+                  onChange={onchange}
+                  id="isAdmin"
+                  name="isAdmin"
+                />
+                <strong>True</strong>
+                <input
+                  type="radio"
+                  id="isAdmin"
+                  name="isAdmin"
+                  className="mx-4"
+                  value={user.isAdmin}
+                  onChange={onchange}
+                />
+                <strong>False</strong>
 
                 <div>
                   <label
@@ -305,7 +306,7 @@ const Register = () => {
                     onChange={onchange}
                   />
                 </div>
-       <Button
+                <Button
                   style={{
                     marginTop: "15px",
                     borderRadius: "8px",

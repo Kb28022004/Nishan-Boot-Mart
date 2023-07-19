@@ -1,39 +1,46 @@
 import React, { Fragment, useState } from "react";
 
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 
 import { Button } from "../../styles/Button";
 import { Box } from "@mui/material";
 
-const Login = ({ history }) => {
+const Login = () => {
   const [user, setuser] = useState({
     email: "",
     password: "",
   });
-
+const [ErrorMessage,setErrorMessage]=useState("")
+  const history=useNavigate()
   const submitHandler = async (e) => {
     e.preventDefault();
     const { email, password } = user;
-    const data = await fetch("https://localhost:5000/api/user/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, password }),
-      credentials:"include"
-    });
 
-    const json = await data.json();
-
-    if (json.status === 400 || !json) {
-      window.alert("Login failed");
-      console.log("Login failed");
-    } else {
-      window.alert("Login Successfull");
-      console.log("Login successfull");
-      history("/profile:accountsettings");
+     const data = await fetch("http://localhost:5000/api/user/login", {
+       method: "POST",
+       headers: {
+         "Content-Type": "application/json",
+       },
+       body: JSON.stringify({ email, password }),
+       credentials:"include"
+     });
+ 
+     const json = await data.json();
+ 
+     try {
+      if(data.status===400){
+        window.alert('Invalid credentials')
+        setErrorMessage(json.message)
+      }
+  
+      else{
+        window.alert('Login Successfull!')
+history('/profile:accountsettings')
+      }
+    } catch (error) {
+      setErrorMessage('An error occured.Please try again.')
     }
-  };
+    }
 
   const onchange = (e) => {
     setuser({ ...user, [e.target.name]: e.target.value });
@@ -62,6 +69,7 @@ const Login = ({ history }) => {
               <h3 style={{ textAlign: "center" }}> Members Login</h3>
               <hr style={{ width: "30%", margin: "0px auto" }} />
               <div>
+                {ErrorMessage && <p style={{color:'red',fontWeight:"bold"}}>{ErrorMessage}</p>}
                 <label
                   htmlFor="email"
                   style={{ fontSize: "23px", fontFamily: "initial" }}
