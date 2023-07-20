@@ -26,22 +26,32 @@ const [ErrorMessage,setErrorMessage]=useState("")
      });
  
      const json = await data.json();
- 
      try {
-      if(data.status===400){
-        window.alert('Invalid credentials')
-        setErrorMessage(json.message)
-      }
-  
-      else{
-        window.alert('Login Successfull!')
-history('/profile:accountsettings')
-      }
-    } catch (error) {
-      setErrorMessage('An error occured.Please try again.')
-    }
-    }
+     if(data.status===400 ){
+      window.alert('Email and Password is required')
+      setErrorMessage(json.message)
+     }
+     else if(data.json===404){
+      window.alert('User is not exist')
+      setErrorMessage(json.message)
 
+     }
+     else if(data.json===401){
+      window.alert('Password is incorrect')
+      setErrorMessage(json.message)
+
+     }
+     else{
+      window.alert('Login successfull')
+      history('/profile/accountsettings')
+     }
+     } catch (error) {
+      window.alert('Server issue, Please try again ')
+      setErrorMessage(json.message)
+
+     }
+ 
+    }
   const onchange = (e) => {
     setuser({ ...user, [e.target.name]: e.target.value });
   };

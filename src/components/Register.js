@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Button } from "../styles/Button";
 import { Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
@@ -14,7 +14,7 @@ const Register = () => {
     Address: "",
     password: "",
     DateOfBirth: "",
-    isAdmin: "",
+   
   });
 
   const [errors, seterrors] = useState({});
@@ -33,7 +33,7 @@ const Register = () => {
       DateOfBirth,
       Address,
       MobileNumber,
-      isAdmin,
+     
     } = user;
 
     const data = await fetch("http://localhost:5000/api/user/register", {
@@ -49,13 +49,13 @@ const Register = () => {
         MobileNumber,
         Address,
         DateOfBirth,
-        isAdmin,
+       
       }),
     });
 
     const json = await data.json();
     try {
-      if(data.status===400){
+      if(data.status===400 || !json){
         window.alert('Invalid credentials')
       }
       else if(data.status===404){
@@ -178,7 +178,7 @@ history('/login')
                       value={user.password}
                       onChange={onchange}
                     />
-                    {errors.password && <p style={{color:"red",fontWeight:"bold"}}>{errors.password}</p>}
+                    {/* {errors.password && <p style={{color:"red",fontWeight:"bold"}}>{errors.password}</p>} */}
                   </div>
                 </div>
 
@@ -258,33 +258,36 @@ history('/login')
                     onChange={onchange}
                   />
                 </div>
+                {/* <div>
+                  <label
+                    htmlFor="isAdmin"
+                    style={{ fontSize: "23px", fontFamily: "initial" }}
+                    className="my-2"
+                  >
+                    
+                    Are you Admin
+                  </label>
 
-                <label
-                  htmlFor="isAdmin"
-                  style={{ fontSize: "23px", fontFamily: "initial" }}
-                  className="my-4"
-                >
-                  {" "}
-                  Admin : -{" "}
-                </label>
-                <input
-                  type="radio"
-                  className="mx-4"
-                  value={user.isAdmin}
-                  onChange={onchange}
-                  id="isAdmin"
-                  name="isAdmin"
-                />
-                <strong>True</strong>
-                <input
-                  type="radio"
-                  id="isAdmin"
-                  name="isAdmin"
-                  className="mx-4"
-                  value={user.isAdmin}
-                  onChange={onchange}
-                />
-                <strong>False</strong>
+                  <input
+                    type="boolean"
+                    style={{
+                      textTransform: "lowercase",
+                      borderRadius: "6px",
+                      padding: "12px",
+                    }}
+                    // required
+                    autoComplete="off"
+                    id="isAdmin"
+                    name="isAdmin"
+                    className="form-control"
+                    value={user.isAdmin}
+                    onChange={onchange}
+                    placeholder="Write True if your are an admin otherwise False"
+                    // disabled={{}}
+                   
+                  />
+                </div> */}
+
 
                 <div>
                   <label
@@ -349,7 +352,7 @@ history('/login')
                 </div> */}
             </div>
           </div>
-          <h5 className="my-4" style={{ textAlign: "center" }}>
+          {/* <h5 className="my-4" style={{ textAlign: "center" }}>
             or
           </h5>
           <NavLink to="/adminregister">
@@ -364,7 +367,7 @@ history('/login')
             >
               Register As An Admin
             </Button>
-          </NavLink>
+          </NavLink> */}
         </Box>
       </Fragment>
     </Fragment>

@@ -25,6 +25,10 @@ import AccountSettings from "./components/AccountSettings";
 import ForgotPassword from "./components/ForgotPassword";
 import ErrorPage from "./ErrorPage";
 import BrandProducts from "./components/BrandProducts";
+import EditProfile from "./components/EditProfile";
+import MyOrder from "./components/MyOrder";
+import Address from "./components/Address";
+import ChangePassword from "./components/ChangePassword";
 
 
 function App() {
@@ -108,6 +112,21 @@ function App() {
           />
             <Route
             exact
+            path="/profile:yourorders"
+            element={<MyOrder />}
+          />
+            <Route
+            exact
+            path="/profile:address"
+            element={< Address />}
+          />
+            <Route
+            exact
+            path="/profile:changepassword"
+            element={< ChangePassword />}
+          />
+            <Route
+            exact
             path="/forgotpassword"
             element={<ForgotPassword/>}
           />
@@ -118,8 +137,13 @@ function App() {
           />
            <Route
             exact
-            path=""
+            path="brand"
             element={<BrandProducts/>}
+          />
+           <Route
+            exact
+            path="editprofile"
+            element={<EditProfile/>}
           />
         </Routes>
         <Footer />

@@ -27,7 +27,7 @@ const UserSidebar = ({ activepage }) => {
           <span> Account Settings</span>
         </div>
        : 
-       <Link to='/profile/accountsettings'
+       <Link to='/profile:accountsettings'
        className="stylenone">
         <div className="s1">
           <svg
@@ -69,7 +69,7 @@ const UserSidebar = ({ activepage }) => {
           <span> My orders</span>
         </div>
        : 
-       <Link to='/profile/yourorders'
+       <Link to='/profile:yourorders'
        className="stylenone">
                <div className="s1">
           <svg
@@ -102,7 +102,7 @@ const UserSidebar = ({ activepage }) => {
       </div>
       :
       
-      <Link to='/profile/address'
+      <Link to='/profile:address'
       className="stylenone">
       <div className="s1"
       >
@@ -123,7 +123,7 @@ const UserSidebar = ({ activepage }) => {
 
         </div>
         :
-        <Link to="/profile/changepassword"
+        <Link to="/profile:changepassword"
         className="stylenone">
         <div className="s1">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
