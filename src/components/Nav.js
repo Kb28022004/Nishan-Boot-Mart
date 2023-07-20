@@ -7,12 +7,13 @@ import { Button } from "../styles/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { useAlert } from "react-alert";
 import { logout } from "../action/userActions";
+import Login from "./user/Login";
 
 const Nav = () => {
   const alert = useAlert();
   const dispatch = useDispatch();
 
-  const { user, loading } = useSelector((state) => state.auth);
+  const { user} = Login
 
   const logoutHandler = () => {
     dispatch(logout())
@@ -246,9 +247,9 @@ const Nav = () => {
               </NavLink>
             </li>
           </div>
-          {!user ? (
-            <>
-              <span>{user && user.name}</span>
+      
+           
+              
               <li className="nav-item dropdown">
                 <a
                   className="nav-link dropdown-toggle"
@@ -282,9 +283,8 @@ const Nav = () => {
                   </li>
                 </ul>
               </li>
-            </>
-          ) : (
-            !loading && (
+         
+        
               <li>
                 <NavLink
                   to="/login"
@@ -295,8 +295,8 @@ const Nav = () => {
                   <Button style={{ borderRadius: "12px" }}>LOGIN</Button>
                 </NavLink>
               </li>
-            )
-          )}
+            
+        
         </ul>
 
         {/* two button for open and close of menu */}

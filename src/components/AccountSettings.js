@@ -1,43 +1,51 @@
 import React, { useState } from "react";
-
+import axios from "axios";
 import { Button } from "../styles/Button";
 import "./AccountSettings.css";
 
-const AccountSettings = ({ history }) => {
-  const [name, setname] = useState("");
-  const [email, setemail] = useState("");
-  const [gender, setgender] = useState("");
-  const [mobile, setmobile] = useState("");
-  const [dob, setdob] = useState("");
-
-  const submitHandler = (e) => {
+const AccountSettings = ({user,onUpdateSuccess }) => {
+ const [formData, setformData] = useState({
+  Username:user.Username,
+  email:user.email,
+  MobileNumber:user.MobileNumber,
+  gender:user.gender,
+  DateOfBirth:user.DateOfBirth
+ })
+  const submitHandler = async(e) => {
     e.preventDefault();
+try {
+  const response =await axios.put('/api/user/profile',formData);
+  if(response.status===200){
+    onUpdateSuccess(response.data);
 
-    const formData = new FormData();
-    formData.set("name", name);
-    formData.set("email", email);
-    formData.set("dob", dob);
-    formData.set("gender", gender);
-
-    formData.set("mobile", mobile);
+  }
+} catch (error) {
+  console.log('Error updating profile',error);
+}
+   
   };
+
+  const handleChange=(e)=>{
+    const {name,value}=e.target;
+    setformData((prevformData)=>({...prevformData,[name]:value}))
+  }
 
   return (
     <div className="accountsettings">
       <h1 className="mainhead1">Personal Information</h1>
-      <div className="form">
+      <div method="POST" className="form">
         <div className="form-group">
-          <label htmlFor="name">
+          <label htmlFor="Username">
             Your name <span>*</span>
           </label>
           <input
             style={{ autoCorrect: "false", textTransform: "lowercase" }}
             type="text"
-            name="name"
-            id="name"
+            name="Username"
+            id="Username"
             autoCorrect="true"
-            value={name}
-            onChange={(e) => setname(e.target.value)}
+            value={formData.Username}
+            onChange={handleChange}
           />
         </div>
 
@@ -50,8 +58,8 @@ const AccountSettings = ({ history }) => {
             type="email"
             name="email"
             id="email"
-            value={email}
-            onChange={(e) => setemail(e.target.value)}
+            value={formData.email}
+            onChange={handleChange}
           />
         </div>
 
@@ -61,16 +69,16 @@ const AccountSettings = ({ history }) => {
         </div> */}
 
         <div className="form-group">
-          <label htmlFor="mobile">
+          <label htmlFor="MobileNumber">
             Mobile number <span>*</span>
           </label>
           <input
             style={{ autoCorrect: "false", textTransform: "lowercase" }}
             type="number"
-            name="mobile"
-            id="mobile"
-            value={mobile}
-            onChange={(e) => setmobile(e.target.value)}
+            name="MobileNumber"
+            id="MobileNumber"
+            value={formData.MobileNumber}
+            onChange={handleChange}
           />
         </div>
 
@@ -83,22 +91,22 @@ const AccountSettings = ({ history }) => {
             type="text"
             name="gender"
             id="gender"
-            value={gender}
-            onChange={(e) => setgender(e.target.value)}
+            value={formData.gender}
+            onChange={handleChange}
           />
         </div>
 
         <div className="form-group">
-          <label htmlFor="dateofbirth">
+          <label htmlFor="DateOfBirth">
             Date of birth <span>*</span>
           </label>
           <input
             style={{ autoCorrect: "false", textTransform: "lowercase" }}
             type="date"
-            name="dob"
-            id="dob"
-            value={dob}
-            onChange={(e) => setdob(e.target.value)}
+            name="DateOfBirth"
+            id="DateOfBirth"
+            value={formData.DateOfBirth}
+            onChange={handleChange}
           />
         </div>
 

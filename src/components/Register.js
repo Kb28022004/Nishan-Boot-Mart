@@ -17,7 +17,7 @@ const Register = () => {
    
   });
 
-  const [errors, seterrors] = useState({});
+  const [errors, seterrors] = useState("");
 
   const history = useNavigate();
 
@@ -55,12 +55,13 @@ const Register = () => {
 
     const json = await data.json();
     try {
-      if(data.status===400 || !json){
+      if(data.status===400 ){
         window.alert('Invalid credentials')
+        seterrors(json.message)
       }
       else if(data.status===404){
         window.alert('Email is already registered,please try another one')
-        // seterrors(json.message)
+        seterrors(json.message)
 
       }
       else{
@@ -68,7 +69,7 @@ const Register = () => {
 history('/login')
       }
     } catch (error) {
-      // seterrors('An error occured.Please try again.')
+      // seterrors('An error is occured, please try again later')
     }
 
   };
@@ -100,6 +101,8 @@ history('/login')
               <form method="POST" className="needs-validation">
                 <h3 style={{ textAlign: "center" }}> Register</h3>
                 <hr style={{ width: "30%", margin: "0px auto" }} />
+
+                <br />
                 {/* {errors && <p style={{color:"red",fontWeight:"bold"}}>{errors}</p>} */}
                 <div>
                   <label
@@ -125,7 +128,7 @@ history('/login')
                     value={user.Username}
                     onChange={onchange}
                   />
-                  {errors.Username && <p style={{color:"red",fontWeight:"bold"}}>{errors.Username}</p>}
+                  {/* {errors.Username && <p style={{color:"red",fontWeight:"bold"}}>{errors.Username}</p>} */}
                 </div>
                 <div>
                   <label

@@ -1,11 +1,9 @@
 import React, { Fragment, useState } from "react";
-
 import { Link, NavLink, useNavigate } from "react-router-dom";
-
 import { Button } from "../../styles/Button";
 import { Box } from "@mui/material";
 
-const Login = () => {
+const Login = ({onLogin}) => {
   const [user, setuser] = useState({
     email: "",
     password: "",
@@ -31,12 +29,12 @@ const [ErrorMessage,setErrorMessage]=useState("")
       window.alert('Email and Password is required')
       setErrorMessage(json.message)
      }
-     else if(data.json===404){
+     else if(data.status===404){
       window.alert('User is not exist')
       setErrorMessage(json.message)
 
      }
-     else if(data.json===401){
+     else if(data.status===401){
       window.alert('Password is incorrect')
       setErrorMessage(json.message)
 
@@ -50,10 +48,14 @@ const [ErrorMessage,setErrorMessage]=useState("")
       setErrorMessage(json.message)
 
      }
- 
+const User={
+  name:""
+}
+onLogin(User)
+    
     }
   const onchange = (e) => {
-    setuser({ ...user, [e.target.name]: e.target.value });
+    setuser((prevuser)=>({ ...prevuser, [e.target.name]: e.target.value }));
   };
 
   return (
