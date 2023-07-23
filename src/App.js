@@ -15,6 +15,7 @@ import Login from "./components/user/Login";
 import Register from "./components/Register";
 import Dashboard from "./components/Dashboard";
 import Footer from "./components/Footer";
+import React,{useState} from "react";
 
 import AdminProducts from "./components/AdminProducts";
 import Profile from "./components/Profile";
@@ -29,15 +30,20 @@ import EditProfile from "./components/EditProfile";
 import MyOrder from "./components/MyOrder";
 import Address from "./components/Address";
 import ChangePassword from "./components/ChangePassword";
+import UserProfile from "./components/UserProfile";
 
 
 function App() {
 
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
 
-  // useEffect(() => {
-  // store.dispatch(loaduser())
-  // }, [])
-  
+const handleLogin=()=>{
+  setIsLoggedIn(true)
+}
+
+const handleProfile=()=>{
+  setIsLoggedIn(false)
+}
   const theme = {
     colors: {
       heading: "rgb(24 24 29)",
@@ -68,7 +74,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <Router>
         <GlobalStyle />
-        <Header />
+        <Header isLoggedIn={isLoggedIn} onProfile={handleProfile} />
         
         <Routes>
           <Route exact path="/" element={<Home />} />
@@ -84,7 +90,7 @@ function App() {
             path="/profile/:activepage"
             element={< Profile />}
           /> }
-          <Route path="/login" element={<Login  />} />
+          <Route path="/login" element={<Login onLogin={handleLogin}  />} />
           <Route
             path="/register"
             element={<Register />}
@@ -144,6 +150,11 @@ function App() {
             exact
             path="editprofile"
             element={<EditProfile/>}
+          />
+          <Route
+            exact
+            path="userprofile"
+            element={<UserProfile/>}
           />
         </Routes>
         <Footer />

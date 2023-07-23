@@ -9,7 +9,7 @@ const Header = () => {
 
   return (
     <MainHeader>
-      <NavLink to="/">
+      <NavLink to="/" >
         <img style={{height:"80px"}} src="./images/karan.jpg" alt="my logo img" />
       </NavLink>
       <Nav />

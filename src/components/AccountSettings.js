@@ -5,11 +5,11 @@ import "./AccountSettings.css";
 
 const AccountSettings = ({user,onUpdateSuccess }) => {
  const [formData, setformData] = useState({
-  Username:user.Username,
-  email:user.email,
-  MobileNumber:user.MobileNumber,
-  gender:user.gender,
-  DateOfBirth:user.DateOfBirth
+  // Username:user.Username,
+  // email:user.email,
+  // MobileNumber:user.MobileNumber,
+  // gender:user.gender,
+  // DateOfBirth:user.DateOfBirth
  })
   const submitHandler = async(e) => {
     e.preventDefault();

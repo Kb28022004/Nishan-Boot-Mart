@@ -3,7 +3,7 @@ import { Button } from '../styles/Button'
 import { Box } from '@mui/material'
 import { NavLink } from 'react-router-dom'
 
-const UserProfile = ({user}) => {
+const UserProfile = ({data}) => {
     return (
         <div className='userprofile'>
     
@@ -49,22 +49,22 @@ const UserProfile = ({user}) => {
       
         </div>
         <div className='container my-4' style={{color:"blue",fontWeight:"bold",fontSize:"13px"}}>
-          <h3>{user.Username} </h3>
+          <h3>{data.Username} </h3>
           <br />
           <br />
-          <h3>{user.DateOfBirth}</h3>
+          <h3>{data.DateOfBirth}</h3>
           <br />
           <br />
-          <h3>{user.gender}</h3>
+          <h3>{data.gender}</h3>
           <br />
           <br />
-          <h3>{user.email}</h3>
+          <h3>{data.email}</h3>
           <br />
           <br />
-          <h3>{user.MobileNumber}</h3>
+          <h3>{data.MobileNumber}</h3>
           <br />
           <br />
-          <h3>{user.Address}</h3>
+          <h3>{data.Address}</h3>
           
         </div>
       </div>

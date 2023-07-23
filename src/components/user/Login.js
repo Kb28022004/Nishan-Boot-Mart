@@ -2,9 +2,11 @@ import React, { Fragment, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { Button } from "../../styles/Button";
 import { Box } from "@mui/material";
+// import axios from "axios";
+// import Cookies from 'js-cookie'
 
 const Login = ({onLogin}) => {
-  const [user, setuser] = useState({
+  const [formData, setformData] = useState({
     email: "",
     password: "",
   });
@@ -12,7 +14,8 @@ const [ErrorMessage,setErrorMessage]=useState("")
   const history=useNavigate()
   const submitHandler = async (e) => {
     e.preventDefault();
-    const { email, password } = user;
+
+    const { email, password } = formData;
 
      const data = await fetch("http://localhost:5000/api/user/login", {
        method: "POST",
@@ -41,23 +44,21 @@ const [ErrorMessage,setErrorMessage]=useState("")
      }
      else{
       window.alert('Login successfull')
-      history('/profile/accountsettings')
+      history('/')
      }
      } catch (error) {
       window.alert('Server issue, Please try again ')
       setErrorMessage(json.message)
 
      }
-const User={
-  name:""
-}
-onLogin(User)
-    
+
+   
     }
   const onchange = (e) => {
-    setuser((prevuser)=>({ ...prevuser, [e.target.name]: e.target.value }));
+    setformData((prevformData)=>({ ...prevformData, [e.target.name]: e.target.value }));
   };
 
+  
   return (
     <Fragment>
       <Box
@@ -102,7 +103,7 @@ onLogin(User)
                     id="email"
                     name="email"
                     className="form-control"
-                    value={user.email}
+                    value={formData.email}
                     onChange={onchange}
                   />
                   <div
@@ -133,7 +134,7 @@ onLogin(User)
                     id="password"
                     name="password"
                     className="form-control"
-                    value={user.password}
+                    value={formData.password}
                     onChange={onchange}
                   />
                 </div>

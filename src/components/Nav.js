@@ -4,20 +4,20 @@ import styled from "styled-components";
 import { FiShoppingCart } from "react-icons/fi";
 import { CgMenu, CgClose, CgProfile } from "react-icons/cg";
 import { Button } from "../styles/Button";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch} from "react-redux";
 import { useAlert } from "react-alert";
 import { logout } from "../action/userActions";
-import Login from "./user/Login";
 
-const Nav = () => {
+
+const Nav = ({ isLoggedIn, onProfile }) => {
   const alert = useAlert();
   const dispatch = useDispatch();
 
-  const { user} = Login
+ 
 
   const logoutHandler = () => {
-    dispatch(logout())
-    alert.success("Logged Out Successfully")
+    dispatch(logout());
+    alert.success("Logged Out Successfully");
   };
 
   const [menuIcon, setMenuIcon] = useState();
@@ -247,56 +247,51 @@ const Nav = () => {
               </NavLink>
             </li>
           </div>
-      
-           
-              
-              <li className="nav-item dropdown">
-                <a
-                  className="nav-link dropdown-toggle"
-                  href="/"
-                  id="navbarDropdown"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  <CgProfile
-                    style={{ height: "32px", width: "100%", color: "black" }}
-                  />
-                </a>
-                <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <li>
-                    <Link
-                      className="dropdown-item"
-                      to="/profile/accountsettings"
-                    >
-                      My Profile
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      onClick={logoutHandler}
-                      className="dropdown-item"
-                      to="/"
-                    >
-                      Logout
-                    </Link>
-                  </li>
-                </ul>
-              </li>
-         
-        
-              <li>
-                <NavLink
-                  to="/login"
-                  className="navbar-link "
-                  type="button"
-                  onClick={() => setMenuIcon(false)}
-                >
-                  <Button style={{ borderRadius: "12px" }}>LOGIN</Button>
-                </NavLink>
-              </li>
-            
-        
+
+          {isLoggedIn ? (
+            <li className="nav-item dropdown">
+              <a
+                className="nav-link dropdown-toggle"
+                href="/"
+                id="navbarDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <CgProfile
+                onClick={onProfile}
+                  style={{ height: "32px", width: "100%", color: "black" }}
+                />
+              </a>
+              <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li>
+                  <Link className="dropdown-item" to="/profile/accountsettings">
+                    My Profile
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    onClick={logoutHandler}
+                    className="dropdown-item"
+                    to="/"
+                  >
+                    Logout
+                  </Link>
+                </li>
+              </ul>
+            </li>
+          ) : (
+            <li>
+              <NavLink
+                to="/login"
+                className="navbar-link "
+                type="button"
+                onClick={() => setMenuIcon(false)}
+              >
+                <Button style={{ borderRadius: "12px" }}>LOGIN</Button>
+              </NavLink>
+            </li>
+          )}
         </ul>
 
         {/* two button for open and close of menu */}
